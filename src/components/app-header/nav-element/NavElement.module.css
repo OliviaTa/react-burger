@@ -1,0 +1,8 @@
+.element {
+  display: flex;
+  cursor: pointer;
+}
+
+.active {
+  color: #f2f2f3;
+}
