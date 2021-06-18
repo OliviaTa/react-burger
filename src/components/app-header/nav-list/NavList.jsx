@@ -8,6 +8,19 @@ class NavList extends React.Component {
         activeLink: 'constructor'
     };
 
+    menu = [
+        {
+            name: 'constructor',
+            text: 'Конструктор',
+            icon: BurgerIcon
+        },
+        {
+            name: 'ribbon',
+            text: 'Лента заказов',
+            icon: ListIcon
+        }
+    ];
+
     onLinkClick = (name) => {
         this.setState({ activeLink: name });
     };
@@ -16,24 +29,22 @@ class NavList extends React.Component {
         return (
             <nav>
                 <ul className={styles.navList}>
-                    <li className="mr-2">
-                        <NavElement
-                            icon={<BurgerIcon type={this.state.activeLink === 'constructor' ? "primary" : "secondary"} />}
-                            text="Конструктор"
-                            isActive={this.state.activeLink === 'constructor'}
-                            name="constructor"
-                            onLinkClick={this.onLinkClick}
-                        />
-                    </li>
-                    <li>
-                        <NavElement
-                            icon={<ListIcon type={this.state.activeLink === 'ribbon' ? "primary" : "secondary"} />}
-                            text="Лента заказов"
-                            isActive={this.state.activeLink === 'ribbon'}
-                            name="ribbon"
-                            onLinkClick={this.onLinkClick}
-                        />
-                    </li>
+                    {this.menu.map((item, index) => {
+                        const Icon = item.icon;
+                        const isActive = this.state.activeLink === item.name;
+
+                        return (
+                            <li className={index === (this.menu.length - 1) ? '' : "mr-2"} key={item.name}>
+                                <NavElement
+                                    icon={<Icon type={isActive ? "primary" : "secondary"} />}
+                                    text={item.text}
+                                    isActive={isActive}
+                                    name={item.name}
+                                    onLinkClick={this.onLinkClick}
+                                />
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         );
