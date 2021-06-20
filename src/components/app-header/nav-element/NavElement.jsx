@@ -8,7 +8,7 @@ function NavElement({ icon, text, isActive = false, name = '', onLinkClick }) {
     return (
         <div className={`${styles.element} pl-5 pr-5`} onClick={elementClick}>
             {icon}
-            <p className={`${isActive ? styles.active : ''} text text_type_main-default text_color_inactive ml-2`}>{text}</p>
+            <p className={`${isActive ? styles.active : ''} text_color_inactive ml-2`}>{text}</p>
         </div>
     );
 }
