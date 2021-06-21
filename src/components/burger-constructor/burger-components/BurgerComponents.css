@@ -1,0 +1,37 @@
+.ingredients {
+  --background-element: #1c1c21;
+}
+
+.constructor-element {
+  margin-left: 32px;
+  padding-right: 32px;
+  max-width: none;
+  width: 536px;
+}
+
+.constructor-element__text {
+  flex-grow: 1;
+}
+
+.burger_component {
+  position: relative;
+}
+
+.drag_icon {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 12px);
+}
+
+.scrolled-elements {
+  overflow-y: auto;
+}
+
+.burger_component:last-child {
+  margin-bottom: 0;
+}
+
+.scrolled-elements::-webkit-scrollbar-track {
+  margin-top: 0;
+  margin-bottom: 0;
+}

@@ -1,0 +1,19 @@
+.ingredients {
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  margin-top: 40px;
+  margin-bottom: 52px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+  margin-top: 40px;
+  margin-bottom: 52px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
