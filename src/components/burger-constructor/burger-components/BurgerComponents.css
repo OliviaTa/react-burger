@@ -25,6 +25,7 @@
 
 .scrolled-elements {
   overflow-y: auto;
+  max-height: 464px;
 }
 
 .burger_component:last-child {

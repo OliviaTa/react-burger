@@ -1,9 +1,9 @@
 import React from 'react';
+import data from '../../utils/data';
 import AppHeader from '../app-header/AppHeader';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import styles from './App.module.css';
-import data from '../../utils/data';
 
 class App extends React.Component {
   state = {

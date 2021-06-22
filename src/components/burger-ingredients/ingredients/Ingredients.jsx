@@ -1,39 +1,28 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import { burgerConstructorPropTypes, tabPropTypes } from '../../../utils/propTypesShapes';
 import IngredientsSection from './ingredients-section/IngredientsSection';
 import style from './Ingredients.module.css';
 
-class Ingredients extends React.Component {
-    state = {
-        heightIngredients: {
-            height: 'auto'
-        }
-    };
-
-    componentDidMount() {
-        const ingredients = document.querySelector('.' + style.ingredients);
-        this.setState({
-            heightIngredients: {
-                height: document.documentElement.clientHeight - ingredients.getBoundingClientRect().y
+function Ingredients({ tabs, data }) {
+    return (
+        <div className={style.ingredients}>
+            {
+                tabs.map((item) => {
+                    return (
+                        <IngredientsSection
+                            title={item.title}
+                            key={item.id}
+                            items={data.filter(elem => elem.type === item.id)} />
+                    );
+                })
             }
-        });
-    }
-
-    render() {
-        return (
-            <div className={style.ingredients} style={this.state.heightIngredients}>
-                {
-                    this.props.tabs.map((item) => {
-                        return (
-                            <IngredientsSection
-                                title={item.title}
-                                key={item.id}
-                                items={this.props.data.filter(elem => elem.type === item.id)} />
-                        );
-                    })
-                }
-            </div >
-        );
-    }
+        </div >
+    );
 }
+
+Ingredients.propTypes = {
+    tabs: PropTypes.arrayOf(tabPropTypes.isRequired),
+    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
+};
 
 export default Ingredients;

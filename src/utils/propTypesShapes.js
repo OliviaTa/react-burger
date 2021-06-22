@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const burgerConstructorPropTypes = PropTypes.shape({
+export const burgerConstructorPropTypes = PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -16,4 +16,7 @@ const burgerConstructorPropTypes = PropTypes.shape({
     count: PropTypes.number.isRequired
 });
 
-export default burgerConstructorPropTypes;
+export const tabPropTypes = PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+});

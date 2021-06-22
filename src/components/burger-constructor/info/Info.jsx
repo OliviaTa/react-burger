@@ -1,11 +1,12 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Info.module.css'
+import PropTypes from 'prop-types';
 
-function Info(props) {
+function Info({ totalPrice }) {
     return (
         <div className={styles.info} id='info'>
             <div className={`${styles.price} mr-10`}>
-                <span className='text_type_digits-medium mr-2'>{props.totalPrice}</span>
+                <span className='text_type_digits-medium mr-2'>{totalPrice}</span>
                 <CurrencyIcon type="primary" />
             </div>
             <Button type="primary" size="large">
@@ -13,6 +14,10 @@ function Info(props) {
             </Button>
         </div>
     );
+}
+
+Info.propTypes = {
+    totalPrice: PropTypes.number.isRequired
 }
 
 export default Info;

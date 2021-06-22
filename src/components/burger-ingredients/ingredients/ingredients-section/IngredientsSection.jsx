@@ -1,24 +1,28 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import { burgerConstructorPropTypes } from '../../../../utils/propTypesShapes';
 import IngredientItem from './ingredient-item/IngredientItem';
 import styles from './IngredientsSection.module.css';
 
-class IngredientsSection extends React.Component {
-    render() {
-        return (
-            <section>
-                <h2 className='text_type_main-medium mb-6'>{this.props.title}</h2>
-                <div className={`${styles.ingredients} pl-4 pr-4 pb-10`}>
-                    {
-                        this.props.items.map((item, index) => {
-                            return (
-                                <IngredientItem item={item} key={index} />
-                            );
-                        })
-                    }
-                </div>
-            </section>
-        );
-    }
+function IngredientsSection({ title, items }) {
+    return (
+        <section>
+            <h2 className='text_type_main-medium mb-6'>{title}</h2>
+            <div className={`${styles.ingredients} pl-4 pr-4 pb-10`}>
+                {
+                    items.map(item => {
+                        return (
+                            <IngredientItem item={item} key={item._id} />
+                        );
+                    })
+                }
+            </div>
+        </section>
+    );
 }
+
+IngredientsSection.propTypes = {
+    title: PropTypes.string.isRequired,
+    items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
+};
 
 export default IngredientsSection;

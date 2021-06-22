@@ -1,5 +1,6 @@
 .ingredients {
   overflow-y: auto;
+  max-height: 756px;
 }
 
 ::-webkit-scrollbar {

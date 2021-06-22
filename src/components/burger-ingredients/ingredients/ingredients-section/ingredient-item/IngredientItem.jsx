@@ -1,5 +1,6 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './IngredientItem.module.css';
+import { burgerConstructorPropTypes } from '../../../../../utils/propTypesShapes';
 
 function IngredientItem({ item }) {
     return (
@@ -13,6 +14,10 @@ function IngredientItem({ item }) {
             {item.count > 0 && <Counter count={item.count} size="default" />}
         </div>
     );
+}
+
+IngredientItem.propTypes = {
+    item: burgerConstructorPropTypes.isRequired
 }
 
 export default IngredientItem;

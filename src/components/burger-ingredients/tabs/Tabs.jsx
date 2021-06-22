@@ -1,28 +1,31 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { tabPropTypes } from '../../../utils/propTypesShapes';
 import styles from './Tabs.module.css';
 
-function Tabs(props) {
+function Tabs({ data, activeTab, onClick }) {
     return (
-        <div className={`${styles.tabs} mb-10`}>
-            {props.data.map((item) => {
-                const isActive = props.activeTab === item.id;
-                const onTabClick = () => {
-                    props.clickFunc(item.id);
-                }
-
+        <nav className={`${styles.tabs} mb-10`}>
+            {data.map((item) => {
                 return (
                     <Tab
                         value={item.id}
                         key={item.id}
-                        active={isActive}
-                        onClick={onTabClick}
+                        active={activeTab === item.id}
+                        onClick={onClick}
                     >
                         {item.title}
                     </Tab>
                 );
             })}
-        </div>
+        </nav>
     );
 }
+
+Tabs.propTypes = {
+    data: PropTypes.arrayOf(tabPropTypes.isRequired),
+    activeTab: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
+};
 
 export default Tabs;

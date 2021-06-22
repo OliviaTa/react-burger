@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import burgerConstructorPropTypes from '../../utils/propTypesShapes';
+import { burgerConstructorPropTypes } from '../../utils/propTypesShapes';
 import styles from './BurgerIngredients.module.css';
 import Ingredients from './ingredients/Ingredients';
 import Tabs from './tabs/Tabs';
@@ -34,7 +34,7 @@ class BurgerIngredients extends React.Component {
                 <Tabs
                     data={this.state.tabs}
                     activeTab={this.state.activeTab}
-                    clickFunc={this.setActiveTab}
+                    onClick={this.setActiveTab}
                 />
                 <Ingredients
                     tabs={this.state.tabs}

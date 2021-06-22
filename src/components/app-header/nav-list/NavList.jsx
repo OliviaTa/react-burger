@@ -27,26 +27,24 @@ class NavList extends React.Component {
 
     render() {
         return (
-            <nav>
-                <ul className={styles.navList}>
-                    {this.menu.map((item, index) => {
-                        const Icon = item.icon;
-                        const isActive = this.state.activeLink === item.name;
+            <ul className={styles.navList}>
+                {this.menu.map((item, index) => {
+                    const Icon = item.icon;
+                    const isActive = this.state.activeLink === item.name;
 
-                        return (
-                            <li className={index === (this.menu.length - 1) ? '' : "mr-2"} key={item.name}>
-                                <NavElement
-                                    icon={<Icon type={isActive ? "primary" : "secondary"} />}
-                                    text={item.text}
-                                    isActive={isActive}
-                                    name={item.name}
-                                    onLinkClick={this.onLinkClick}
-                                />
-                            </li>
-                        );
-                    })}
-                </ul>
-            </nav>
+                    return (
+                        <li className={index === (this.menu.length - 1) ? '' : "mr-2"} key={item.name}>
+                            <NavElement
+                                icon={<Icon type={isActive ? "primary" : "secondary"} />}
+                                text={item.text}
+                                isActive={isActive}
+                                name={item.name}
+                                onLinkClick={this.onLinkClick}
+                            />
+                        </li>
+                    );
+                })}
+            </ul>
         );
     }
 }

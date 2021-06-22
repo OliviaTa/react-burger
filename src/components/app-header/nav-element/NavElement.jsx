@@ -1,4 +1,5 @@
 import styles from './NavElement.module.css';
+import PropTypes from 'prop-types';
 
 function NavElement({ icon, text, isActive = false, name = '', onLinkClick }) {
     const elementClick = () => {
@@ -6,11 +7,23 @@ function NavElement({ icon, text, isActive = false, name = '', onLinkClick }) {
     };
 
     return (
-        <div className={`${styles.element} pl-5 pr-5`} onClick={elementClick}>
-            {icon}
-            <p className={`${isActive ? styles.active : ''} text_color_inactive ml-2`}>{text}</p>
+        <div
+            className={`
+                ${isActive ? styles.active : ''} 
+                ${styles.element} 
+                pl-5 pr-5 text_color_inactive`}
+            onClick={elementClick}>
+            {icon} {text}
         </div>
     );
+}
+
+NavElement.propTypes = {
+    icon: PropTypes.element.isRequired,
+    text: PropTypes.string.isRequired,
+    isActive: PropTypes.bool,
+    name: PropTypes.string,
+    onLinkClick: PropTypes.func.isRequired
 }
 
 export default NavElement;

@@ -6,11 +6,11 @@ import styles from './AppHeader.module.css';
 function AppHeader() {
     return (
         <header className={`${styles.appHeader} pt-4 pb-4`}>
-            <div className={styles.content}>
+            <nav className={styles.content}>
                 <NavList />
                 <Logo />
                 <ProfileMenu />
-            </div>
+            </nav>
         </header>
     );
 }
