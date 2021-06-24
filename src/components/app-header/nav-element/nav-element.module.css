@@ -1,0 +1,9 @@
+.element {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.active {
+  color: #f2f2f3;
+}

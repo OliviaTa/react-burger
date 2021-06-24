@@ -1,0 +1,7 @@
+.tabs {
+  display: flex;
+}
+
+.tabs > div {
+  flex-grow: 1;
+}
