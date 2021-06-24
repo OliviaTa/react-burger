@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { burgerConstructorPropTypes, tabPropTypes } from '../../../utils/propTypesShapes';
-import IngredientsSection from './ingredients-section/IngredientsSection';
-import style from './Ingredients.module.css';
+import IngredientsSection from './ingredients-section/ingredients-section';
+import style from './ingredients.module.css';
 
 function Ingredients({ tabs, data }) {
     return (

@@ -1,5 +1,5 @@
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import NavElement from '../nav-element/NavElement';
+import NavElement from '../nav-element/nav-element';
 
 function ProfileMenu() {
     return (

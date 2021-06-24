@@ -1,7 +1,7 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { tabPropTypes } from '../../../utils/propTypesShapes';
-import styles from './Tabs.module.css';
+import styles from './tabs.module.css';
 
 function Tabs({ data, activeTab, onClick }) {
     return (

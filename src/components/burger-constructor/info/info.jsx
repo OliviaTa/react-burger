@@ -1,5 +1,5 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Info.module.css'
+import styles from './info.module.css'
 import PropTypes from 'prop-types';
 
 function Info({ totalPrice }) {

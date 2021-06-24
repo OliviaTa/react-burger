@@ -1,7 +1,7 @@
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
-import NavElement from '../nav-element/NavElement';
-import styles from './NavList.module.css';
+import NavElement from '../nav-element/nav-element';
+import styles from './nav-list.module.css';
 
 class NavList extends React.Component {
     state = {

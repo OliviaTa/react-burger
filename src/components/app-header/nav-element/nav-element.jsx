@@ -1,4 +1,4 @@
-import styles from './NavElement.module.css';
+import styles from './nav-element.module.css';
 import PropTypes from 'prop-types';
 
 function NavElement({ icon, text, isActive = false, name = '', onLinkClick }) {

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { burgerConstructorPropTypes } from '../../utils/propTypesShapes';
-import styles from './BurgerIngredients.module.css';
-import Ingredients from './ingredients/Ingredients';
-import Tabs from './tabs/Tabs';
+import styles from './burger-ingredients.module.css';
+import Ingredients from './ingredients/ingredients';
+import Tabs from './tabs/tabs';
 
 class BurgerIngredients extends React.Component {
     state = {
@@ -29,7 +29,7 @@ class BurgerIngredients extends React.Component {
 
     render() {
         return (
-            <div className={`${styles.wrapper} pt-10`}>
+            <div className={`${styles.wrapper} pt-10 mr-10`}>
                 <h1 className="text_type_main-large mb-5">Соберите бургер</h1>
                 <Tabs
                     data={this.state.tabs}

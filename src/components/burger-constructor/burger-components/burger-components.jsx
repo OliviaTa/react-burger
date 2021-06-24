@@ -1,7 +1,7 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import { burgerConstructorPropTypes } from '../../../utils/propTypesShapes';
-import "./BurgerComponents.css";
+import "./burger-components.css";
 
 function BurgerComponents({ data }) {
     const bun = data.find(item => item.type === 'bun');
