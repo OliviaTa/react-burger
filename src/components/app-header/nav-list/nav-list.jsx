@@ -3,12 +3,10 @@ import React from 'react';
 import NavElement from '../nav-element/nav-element';
 import styles from './nav-list.module.css';
 
-class NavList extends React.Component {
-    state = {
-        activeLink: 'constructor'
-    };
+function NavList() {
+    const [activeLink, setActiveLink] = React.useState('constructor');
 
-    menu = [
+    const menu = [
         {
             name: 'constructor',
             text: 'Конструктор',
@@ -21,32 +19,30 @@ class NavList extends React.Component {
         }
     ];
 
-    onLinkClick = (name) => {
-        this.setState({ activeLink: name });
+    const onLinkClick = (name) => {
+        setActiveLink(name);
     };
 
-    render() {
-        return (
-            <ul className={styles.navList}>
-                {this.menu.map((item, index) => {
-                    const Icon = item.icon;
-                    const isActive = this.state.activeLink === item.name;
+    return (
+        <ul className={styles.navList}>
+            {menu.map((item, index) => {
+                const Icon = item.icon;
+                const isActive = activeLink === item.name;
 
-                    return (
-                        <li className={index === (this.menu.length - 1) ? '' : "mr-2"} key={item.name}>
-                            <NavElement
-                                icon={<Icon type={isActive ? "primary" : "secondary"} />}
-                                text={item.text}
-                                isActive={isActive}
-                                name={item.name}
-                                onLinkClick={this.onLinkClick}
-                            />
-                        </li>
-                    );
-                })}
-            </ul>
-        );
-    }
+                return (
+                    <li className={index === (menu.length - 1) ? '' : "mr-2"} key={item.name}>
+                        <NavElement
+                            icon={<Icon type={isActive ? "primary" : "secondary"} />}
+                            text={item.text}
+                            isActive={isActive}
+                            name={item.name}
+                            onLinkClick={onLinkClick}
+                        />
+                    </li>
+                );
+            })}
+        </ul>
+    );
 }
 
 export default NavList;

@@ -5,44 +5,40 @@ import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
 
-class BurgerIngredients extends React.Component {
-    state = {
-        activeTab: 'bun',
-        tabs: [
-            {
-                id: 'bun',
-                title: 'Булки'
-            },
-            {
-                id: 'sauce',
-                title: 'Соусы'
-            }, {
-                id: 'main',
-                title: 'Начинки'
-            }
-        ]
-    };
+function BurgerIngredients({ data }) {
+    const [activeTab, setActiveTab] = React.useState('bun');
 
-    setActiveTab = (tab) => {
-        this.setState({ activeTab: tab });
+    const tabs = [
+        {
+            id: 'bun',
+            title: 'Булки'
+        }, {
+            id: 'sauce',
+            title: 'Соусы'
+        }, {
+            id: 'main',
+            title: 'Начинки'
+        }
+    ];
+
+    const onTabClick = (tab) => {
+        setActiveTab(tab);
     }
 
-    render() {
-        return (
-            <div className={`${styles.wrapper} pt-10 mr-10`}>
-                <h1 className="text_type_main-large mb-5">Соберите бургер</h1>
-                <Tabs
-                    data={this.state.tabs}
-                    activeTab={this.state.activeTab}
-                    onClick={this.setActiveTab}
-                />
-                <Ingredients
-                    tabs={this.state.tabs}
-                    data={this.props.data}
-                />
-            </div>
-        );
-    }
+    return (
+        <div className={`${styles.wrapper} pt-10 mr-10`}>
+            <h1 className="text_type_main-large mb-5">Соберите бургер</h1>
+            <Tabs
+                data={tabs}
+                activeTab={activeTab}
+                onClick={onTabClick}
+            />
+            <Ingredients
+                tabs={tabs}
+                data={data}
+            />
+        </div>
+    );
 }
 
 
