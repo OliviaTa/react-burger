@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { burgerConstructorPropTypes, tabPropTypes } from '../../../utils/propTypesShapes';
+import IngredientDetails from '../../modal/ingredient-details/ingredient-details';
 import Modal from '../../modal/modal';
 import IngredientsSection from './ingredients-section/ingredients-section';
 import style from './ingredients.module.css';
 
 function Ingredients({ tabs, data }) {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [currentItem, setCurrentItem] = React.useState({});
     const modalHeader = 'Детали ингредиента';
+
+    const openModal = (item) => {
+        setIsModalOpen(true);
+        setCurrentItem(item);
+    };
 
     return (
         <>
@@ -19,7 +26,7 @@ function Ingredients({ tabs, data }) {
                                 title={item.title}
                                 key={item.id}
                                 items={data.filter(elem => elem.type === item.id)}
-                                onIngredientClick={() => setIsModalOpen(true)}
+                                onIngredientClick={openModal}
                             />
                         );
                     })
@@ -29,7 +36,9 @@ function Ingredients({ tabs, data }) {
                 header={modalHeader}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-            />
+            >
+                <IngredientDetails item={currentItem} />
+            </Modal>
         </>
     );
 }
