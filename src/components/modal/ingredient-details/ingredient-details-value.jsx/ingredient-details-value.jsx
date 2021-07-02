@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './ingredient-details-value.module.css';
 
 function IngredientDetailsValue({ text, value }) {
@@ -8,5 +9,10 @@ function IngredientDetailsValue({ text, value }) {
         </div>
     );
 }
+
+IngredientDetailsValue.propTypes = {
+    text: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired
+};
 
 export default IngredientDetailsValue;

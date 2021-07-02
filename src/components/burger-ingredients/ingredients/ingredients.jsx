@@ -8,7 +8,7 @@ import style from './ingredients.module.css';
 
 function Ingredients({ tabs, data }) {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [currentItem, setCurrentItem] = React.useState({});
+    const [currentItem, setCurrentItem] = React.useState();
     const modalHeader = 'Детали ингредиента';
 
     const openModal = (item) => {

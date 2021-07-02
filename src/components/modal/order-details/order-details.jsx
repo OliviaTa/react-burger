@@ -1,5 +1,6 @@
-import styles from './order-details.module.css';
+import PropTypes from 'prop-types';
 import checkMarkIconPath from '../../../images/graphics.png';
+import styles from './order-details.module.css';
 
 function OrderDetails({ orderNumber }) {
     return (
@@ -12,5 +13,9 @@ function OrderDetails({ orderNumber }) {
         </div>
     );
 }
+
+OrderDetails.propTypes = {
+    orderNumber: PropTypes.string.isRequired
+};
 
 export default OrderDetails;

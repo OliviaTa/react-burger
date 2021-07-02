@@ -1,4 +1,5 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
@@ -30,5 +31,12 @@ function Modal({ header = null, isOpen, onClose, children }) {
         </ModalOverlay>
         , document.body);
 }
+
+Modal.propTypes = {
+    header: PropTypes.string,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element
+};
 
 export default Modal;

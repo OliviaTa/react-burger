@@ -26,7 +26,8 @@ function IngredientsSection({ title, items, onIngredientClick }) {
 
 IngredientsSection.propTypes = {
     title: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
+    items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired),
+    onIngredientClick: PropTypes.func.isRequired
 };
 
 export default IngredientsSection;

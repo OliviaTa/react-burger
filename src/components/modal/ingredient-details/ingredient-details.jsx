@@ -1,3 +1,4 @@
+import { burgerConstructorPropTypes } from '../../../utils/propTypesShapes';
 import IngredientDetailsValue from './ingredient-details-value.jsx/ingredient-details-value';
 import styles from './ingredient-details.module.css';
 
@@ -15,5 +16,9 @@ function IngredientDetails({ item }) {
         </div>
     );
 }
+
+IngredientDetails.propTypes = {
+    item: burgerConstructorPropTypes
+};
 
 export default IngredientDetails;
