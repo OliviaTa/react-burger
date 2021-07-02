@@ -2,10 +2,12 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from '../../modal/modal';
+import OrderDetails from '../../modal/order-details/order-details';
 import styles from './info.module.css';
 
 function Info({ totalPrice }) {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [orderNumber, setOrderNumber] = React.useState('034536');
 
     return (
         <div className={styles.info} id='info'>
@@ -23,7 +25,9 @@ function Info({ totalPrice }) {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-            />
+            >
+                <OrderDetails orderNumber={orderNumber} />
+            </Modal>
         </div>
     );
 }
