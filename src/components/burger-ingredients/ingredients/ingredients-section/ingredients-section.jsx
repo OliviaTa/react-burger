@@ -3,7 +3,7 @@ import { burgerConstructorPropTypes } from '../../../../utils/propTypesShapes';
 import IngredientItem from './ingredient-item/ingredient-item';
 import styles from './ingredients-section.module.css';
 
-function IngredientsSection({ title, items }) {
+function IngredientsSection({ title, items, onIngredientClick }) {
     return (
         <section>
             <h2 className='text_type_main-medium mb-6'>{title}</h2>
@@ -11,7 +11,11 @@ function IngredientsSection({ title, items }) {
                 {
                     items.map(item => {
                         return (
-                            <IngredientItem item={item} key={item._id} />
+                            <IngredientItem
+                                item={item}
+                                key={item._id}
+                                onClick={onIngredientClick}
+                            />
                         );
                     })
                 }
@@ -22,7 +26,8 @@ function IngredientsSection({ title, items }) {
 
 IngredientsSection.propTypes = {
     title: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
+    items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired),
+    onIngredientClick: PropTypes.func.isRequired
 };
 
 export default IngredientsSection;

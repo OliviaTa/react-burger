@@ -1,26 +1,45 @@
 import React from 'react';
-import data from '../../utils/data';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
-class App extends React.Component {
-  state = {
-    data: data.map(item => ({ ...item, count: 1 }))
-  };
+const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
-  render() {
-    return (
-      <div className={`${styles.app} text text_type_main-default`}>
-        <AppHeader />
-        <main className={styles.main}>
-          <BurgerIngredients data={this.state.data} />
-          <BurgerConstructor data={this.state.data.filter(element => element.count > 0)} />
-        </main>
-      </div>
-    );
-  }
+function App() {
+
+  const [burgersData, setBurgersData] = React.useState([]);
+
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch(INGREDIENTS_URL);
+
+        if (res.ok) {
+          const data = await res.json();
+          setBurgersData(
+            data.data.map(item => ({ ...item, count: 1 }))
+          );
+        } else {
+          Promise.reject(`Ошибка ${res.status}`)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getData();
+  }, []);
+
+  return (
+    <div className={`${styles.app} text text_type_main-default`}>
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerIngredients data={burgersData} />
+        <BurgerConstructor data={burgersData.filter(element => element.count > 0)} />
+      </main>
+    </div>
+  );
 }
 
 export default App;
