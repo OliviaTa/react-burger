@@ -14,10 +14,15 @@ function App() {
     const getData = async () => {
       try {
         const res = await fetch(INGREDIENTS_URL);
-        const data = await res.json();
-        setBurgersData(
-          data.data.map(item => ({ ...item, count: 1 }))
-        );
+
+        if (res.ok) {
+          const data = await res.json();
+          setBurgersData(
+            data.data.map(item => ({ ...item, count: 1 }))
+          );
+        } else {
+          Promise.reject(`Ошибка ${res.status}`)
+        }
       } catch (err) {
         console.log(err);
       }

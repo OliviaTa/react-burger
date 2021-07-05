@@ -6,11 +6,11 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
 function Modal({ header = null, isOpen, onClose, children }) {
-    const closeOnEscKeyDown = (event) => {
-        if (event.key === 'Escape') onClose();
-    };
-
     React.useEffect(() => {
+        const closeOnEscKeyDown = (event) => {
+            if (event.key === 'Escape') onClose();
+        };
+
         document.addEventListener('keydown', closeOnEscKeyDown);
 
         return () => {
@@ -29,7 +29,7 @@ function Modal({ header = null, isOpen, onClose, children }) {
                 {children}
             </div>
         </ModalOverlay>
-        , document.body);
+        , document.getElementById('modal'));
 }
 
 Modal.propTypes = {
