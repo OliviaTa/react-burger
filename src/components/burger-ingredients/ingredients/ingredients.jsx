@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { burgerConstructorPropTypes, tabPropTypes } from '../../../utils/propTypesShapes';
+import { BurgersDataContext } from '../../../utils/appContext';
+import { tabPropTypes } from '../../../utils/propTypesShapes';
 import IngredientDetails from '../../modal/ingredient-details/ingredient-details';
 import Modal from '../../modal/modal';
 import IngredientsSection from './ingredients-section/ingredients-section';
 import style from './ingredients.module.css';
 
-function Ingredients({ tabs, data }) {
+function Ingredients({ tabs }) {
+    const { burgersData } = React.useContext(BurgersDataContext);
+
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [currentItem, setCurrentItem] = React.useState();
     const modalHeader = 'Детали ингредиента';
@@ -25,7 +28,7 @@ function Ingredients({ tabs, data }) {
                             <IngredientsSection
                                 title={item.title}
                                 key={item.id}
-                                items={data.filter(elem => elem.type === item.id)}
+                                items={burgersData.filter(elem => elem.type === item.id)}
                                 onIngredientClick={openModal}
                             />
                         );
@@ -44,8 +47,7 @@ function Ingredients({ tabs, data }) {
 }
 
 Ingredients.propTypes = {
-    tabs: PropTypes.arrayOf(tabPropTypes.isRequired),
-    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
+    tabs: PropTypes.arrayOf(tabPropTypes.isRequired)
 };
 
 export default Ingredients;

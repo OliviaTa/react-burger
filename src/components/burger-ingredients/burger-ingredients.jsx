@@ -5,7 +5,7 @@ import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
     const [activeTab, setActiveTab] = React.useState('bun');
 
     const tabs = [
@@ -33,18 +33,9 @@ function BurgerIngredients({ data }) {
                 activeTab={activeTab}
                 onClick={onTabClick}
             />
-            <Ingredients
-                tabs={tabs}
-                data={data}
-            />
+            <Ingredients tabs={tabs} />
         </div>
     );
 }
-
-
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
-};
 
 export default BurgerIngredients;

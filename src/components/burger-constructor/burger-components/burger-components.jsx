@@ -1,10 +1,11 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import { burgerConstructorPropTypes } from '../../../utils/propTypesShapes';
+import React from 'react';
+import { BurgersDataContext } from "../../../utils/appContext";
 import "./burger-components.css";
 
-function BurgerComponents({ data }) {
-    const bun = data.find(item => item.type === 'bun');
+function BurgerComponents() {
+    const { burgersData } = React.useContext(BurgersDataContext);
+    const bun = burgersData.find(item => item.type === 'bun');
 
     return (
         <div className='ingredients mb-10'>
@@ -18,7 +19,7 @@ function BurgerComponents({ data }) {
                 />
             </div>}
             <div className='scrolled-elements'>
-                {data.map(item => {
+                {burgersData.map(item => {
                     return (
                         item.type !== 'bun' ?
                             <div className='burger_component mb-4' key={item._id}>
@@ -47,9 +48,5 @@ function BurgerComponents({ data }) {
         </div>
     );
 }
-
-BurgerComponents.propTypes = {
-    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
-};
 
 export default BurgerComponents;

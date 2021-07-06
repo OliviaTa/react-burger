@@ -1,4 +1,5 @@
 import React from 'react';
+import { BurgersDataContext } from '../../utils/appContext';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -18,7 +19,7 @@ function App() {
         if (res.ok) {
           const data = await res.json();
           setBurgersData(
-            data.data.map(item => ({ ...item, count: 1 }))
+            data.data.map(item => ({ ...item, count: 0 }))
           );
         } else {
           Promise.reject(`Ошибка ${res.status}`)
@@ -33,11 +34,13 @@ function App() {
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients data={burgersData} />
-        <BurgerConstructor data={burgersData.filter(element => element.count > 0)} />
-      </main>
+      <BurgersDataContext.Provider value={{ burgersData }}>
+        <AppHeader />
+        <main className={styles.main}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </main>
+      </BurgersDataContext.Provider>
     </div>
   );
 }
