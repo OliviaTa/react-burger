@@ -1,11 +1,13 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from 'react';
-import { BurgersDataContext } from "../../../utils/appContext";
+import { ConstructorContext } from "../../../utils/appContext";
 import "./burger-components.css";
 
 function BurgerComponents() {
-    const { burgersData } = React.useContext(BurgersDataContext);
-    const bun = burgersData.find(item => item.type === 'bun');
+    const { constructorState, constructorDispatcher } = React.useContext(ConstructorContext);
+    const filteredElements = constructorState.burgersData.filter(item => item.count > 0);
+
+    const bun = filteredElements.find(item => item.type === 'bun');
 
     return (
         <div className='ingredients mb-10'>
@@ -19,9 +21,14 @@ function BurgerComponents() {
                 />
             </div>}
             <div className='scrolled-elements'>
-                {burgersData.map(item => {
-                    return (
-                        item.type !== 'bun' ?
+                {filteredElements
+                    .filter(item => item.type !== 'bun')
+                    .map(item => {
+                        const deleteItem = () => {
+                            constructorDispatcher({ type: 'removeItem', payload: item });
+                        };
+
+                        return (
                             <div className='burger_component mb-4' key={item._id}>
                                 <div className='drag_icon'>
                                     <DragIcon type="primary" />
@@ -30,11 +37,11 @@ function BurgerComponents() {
                                     text={item.name}
                                     thumbnail={item.image}
                                     price={item.price}
+                                    handleClose={deleteItem}
                                 />
-                            </div> :
-                            null
-                    );
-                }).filter(x => x)}
+                            </div>
+                        );
+                    }).filter(x => x)}
             </div>
             {bun && <div className='bottom-bun pt-4' key={`${bun._id}-bottom`}>
                 <ConstructorElement

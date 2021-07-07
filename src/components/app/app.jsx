@@ -1,5 +1,5 @@
-import React from 'react';
-import { BurgersDataContext } from '../../utils/appContext';
+import React, { useReducer } from 'react';
+import { ConstructorContext } from '../../utils/appContext';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -7,9 +7,35 @@ import styles from './app.module.css';
 
 const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
-function App() {
+const constructorInitialState = { burgersData: [], totalPrice: 0 };
 
-  const [burgersData, setBurgersData] = React.useState([]);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'setData':
+      return { ...state, burgersData: action.payload };
+    case 'addItem':
+      if (action.payload.type === 'bun' && state.burgersData.filter(item => item.type === 'bun' && item.count > 0).length) return state;
+
+      return {
+        burgersData: state.burgersData.map(item => item._id === action.payload._id ? { ...item, count: item.count + 1 } : item),
+        totalPrice: state.totalPrice + action.payload.price
+      };
+    case 'removeItem':
+      if (action.payload.count === 0) return state;
+
+      return {
+        burgersData: state.burgersData.map(item => item._id === action.payload._id ? { ...item, count: item.count - 1 } : item),
+        totalPrice: state.totalPrice - action.payload.price
+      };
+    case 'resetPrice':
+      return { burgersData: state.burgersData, totalPrice: 0 };
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+};
+
+function App() {
+  const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState, undefined);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -18,9 +44,10 @@ function App() {
 
         if (res.ok) {
           const data = await res.json();
-          setBurgersData(
-            data.data.map(item => ({ ...item, count: 0 }))
-          );
+          constructorDispatcher({
+            type: 'setData',
+            payload: data.data.map(item => ({ ...item, count: 0 }))
+          });
         } else {
           Promise.reject(`Ошибка ${res.status}`)
         }
@@ -34,13 +61,13 @@ function App() {
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
-      <BurgersDataContext.Provider value={{ burgersData }}>
-        <AppHeader />
+      <AppHeader />
+      <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
         <main className={styles.main}>
           <BurgerIngredients />
           <BurgerConstructor />
         </main>
-      </BurgersDataContext.Provider>
+      </ConstructorContext.Provider>
     </div>
   );
 }

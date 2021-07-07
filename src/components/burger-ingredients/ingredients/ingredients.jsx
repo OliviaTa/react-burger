@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { BurgersDataContext } from '../../../utils/appContext';
+import { ConstructorContext } from '../../../utils/appContext';
 import { tabPropTypes } from '../../../utils/propTypesShapes';
 import IngredientDetails from '../../modal/ingredient-details/ingredient-details';
 import Modal from '../../modal/modal';
@@ -8,7 +8,7 @@ import IngredientsSection from './ingredients-section/ingredients-section';
 import style from './ingredients.module.css';
 
 function Ingredients({ tabs }) {
-    const { burgersData } = React.useContext(BurgersDataContext);
+    const { constructorState } = React.useContext(ConstructorContext);
 
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [currentItem, setCurrentItem] = React.useState();
@@ -28,7 +28,7 @@ function Ingredients({ tabs }) {
                             <IngredientsSection
                                 title={item.title}
                                 key={item.id}
-                                items={burgersData.filter(elem => elem.type === item.id)}
+                                items={constructorState.burgersData.filter(elem => elem.type === item.id)}
                                 onIngredientClick={openModal}
                             />
                         );
