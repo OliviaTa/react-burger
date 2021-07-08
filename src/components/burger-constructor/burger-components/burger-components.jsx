@@ -5,31 +5,27 @@ import "./burger-components.css";
 
 function BurgerComponents() {
     const { constructorState, constructorDispatcher } = React.useContext(ConstructorContext);
-    const filteredElements = constructorState.burgersData.filter(item => item.count > 0);
-
-    const bun = filteredElements.find(item => item.type === 'bun');
 
     return (
         <div className='ingredients mb-10'>
-            {bun && <div className='mb-4' key={`${bun._id}-top`}>
+            {constructorState.bun && <div className='mb-4' key={`${constructorState.bun._id}-top`}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    thumbnail={bun.image}
-                    price={bun.price}
+                    text={`${constructorState.bun.name} (верх)`}
+                    thumbnail={constructorState.bun.image}
+                    price={constructorState.bun.price}
                 />
             </div>}
             <div className='scrolled-elements'>
-                {filteredElements
-                    .filter(item => item.type !== 'bun')
-                    .map(item => {
+                {constructorState.ingredients
+                    .map((item, index) => {
                         const deleteItem = () => {
-                            constructorDispatcher({ type: 'removeItem', payload: item });
+                            constructorDispatcher({ type: 'removeItem', payload: index });
                         };
 
                         return (
-                            <div className='burger_component mb-4' key={item._id}>
+                            <div className='burger_component mb-4' key={`${item._id}-${index}`}>
                                 <div className='drag_icon'>
                                     <DragIcon type="primary" />
                                 </div>
@@ -43,13 +39,13 @@ function BurgerComponents() {
                         );
                     }).filter(x => x)}
             </div>
-            {bun && <div className='bottom-bun pt-4' key={`${bun._id}-bottom`}>
+            {constructorState.bun && <div className='bottom-bun pt-4' key={`${constructorState.bun._id}-bottom`}>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    thumbnail={bun.image}
-                    price={bun.price}
+                    text={`${constructorState.bun.name} (низ)`}
+                    thumbnail={constructorState.bun.image}
+                    price={constructorState.bun.price}
                 />
             </div>}
         </div>

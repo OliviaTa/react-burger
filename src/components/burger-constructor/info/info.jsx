@@ -1,55 +1,48 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ConstructorContext } from '../../../utils/appContext';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
+import { getOrderData } from '../../../utils/api';
 import styles from './info.module.css';
 
 function Info() {
     const { constructorState } = React.useContext(ConstructorContext);
-
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [orderNumber, setOrderNumber] = React.useState('');
+    const [orderNumber, setOrderNumber] = React.useState(0);
+
+    const totalPrice = useMemo(() => {
+        const ingredientsPrice = constructorState.ingredients.reduce((acc, item) => acc + item.price, 0);
+        const bunPrice = (constructorState.bun ? constructorState.bun.price : 0);
+        return ingredientsPrice + bunPrice;
+    },
+        [constructorState]
+    );
+
+    const ingredientsIdList = useMemo(() => {
+        const list = constructorState.ingredients.map(item => item._id);
+        if (constructorState.bun) list.push(constructorState.bun._id);
+        return list;
+    }, [constructorState]);
 
     const onButtonClick = () => {
-        const burgersIdList = constructorState.burgersData.filter(item => item.count > 0).map(item => item._id);
+        if (!ingredientsIdList.length) return;
 
-        const getOrderData = async () => {
-            try {
-                const res = await fetch('https://norma.nomoreparties.space/api/orders', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ingredients: burgersIdList
-                    })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success) {
-                        setOrderNumber(data.order.number);
-                    } else {
-                        Promise.reject(`Ошибка ${data.message}`);
-                    }
-                } else {
-                    Promise.reject(`Ошибка ${res.status}`)
-                }
-            } catch (err) {
+        getOrderData(ingredientsIdList)
+            .then(data => {
+                setOrderNumber(data.order.number);
+                setIsModalOpen(true);
+            })
+            .catch(err => {
                 console.log(err);
-            }
-        };
+            });
 
-        getOrderData();
-
-        setIsModalOpen(true);
     };
 
     return (
         <div className={styles.info} id='info'>
             <div className={`${styles.price} mr-10`}>
-                <span className='text_type_digits-medium mr-2'>{constructorState.totalPrice}</span>
+                <span className='text_type_digits-medium mr-2'>{totalPrice}</span>
                 <CurrencyIcon type="primary" />
             </div>
             <Button
@@ -59,12 +52,9 @@ function Info() {
             >
                 Оформить заказ
             </Button>
-            <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            >
+            {isModalOpen && <Modal onClose={() => setIsModalOpen(false)}>
                 <OrderDetails orderNumber={orderNumber} />
-            </Modal>
+            </Modal>}
         </div>
     );
 }

@@ -1,70 +1,60 @@
-import React, { useReducer } from 'react';
-import { ConstructorContext } from '../../utils/appContext';
+import React, { useMemo, useReducer, useState } from 'react';
+import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
+import { getIngredients } from '../../utils/api';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
-const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
-const constructorInitialState = { burgersData: [], totalPrice: 0 };
+const constructorInitialState = { bun: null, ingredients: [] };
 
 const reducer = (state, action) => {
+  let changedIngredients = [...state.ingredients];
+
   switch (action.type) {
-    case 'setData':
-      return { ...state, burgersData: action.payload };
     case 'addItem':
-      if (action.payload.type === 'bun' && state.burgersData.filter(item => item.type === 'bun' && item.count > 0).length) return state;
+      if (action.payload.type === 'bun') return { ...state, bun: action.payload };
 
-      return {
-        burgersData: state.burgersData.map(item => item._id === action.payload._id ? { ...item, count: item.count + 1 } : item),
-        totalPrice: state.totalPrice + action.payload.price
-      };
+      changedIngredients.push(action.payload);
+      return { ...state, ingredients: changedIngredients };
     case 'removeItem':
-      if (action.payload.count === 0) return state;
+      if (action.payload.type === 'bun') return { ...state, bun: null };
 
-      return {
-        burgersData: state.burgersData.map(item => item._id === action.payload._id ? { ...item, count: item.count - 1 } : item),
-        totalPrice: state.totalPrice - action.payload.price
-      };
-    case 'resetPrice':
-      return { burgersData: state.burgersData, totalPrice: 0 };
+      changedIngredients.splice(action.payload, 1);
+      return { ...state, ingredients: changedIngredients };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
 };
 
 function App() {
+
   const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState, undefined);
+  const constructorValue = useMemo(() => ({
+    constructorState, constructorDispatcher
+  }), [constructorState, constructorDispatcher]);
+
+  const [burgersData, setBurgersData] = useState([]);
+  const burgersDataValue = useMemo(() => ({ burgersData }), [burgersData]);
 
   React.useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch(INGREDIENTS_URL);
-
-        if (res.ok) {
-          const data = await res.json();
-          constructorDispatcher({
-            type: 'setData',
-            payload: data.data.map(item => ({ ...item, count: 0 }))
-          });
-        } else {
-          Promise.reject(`Ошибка ${res.status}`)
-        }
-      } catch (err) {
+    getIngredients()
+      .then(data => {
+        setBurgersData(data.data);
+      })
+      .catch(err => {
         console.log(err);
-      }
-    };
-
-    getData();
+      });
   }, []);
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
       <AppHeader />
-      <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
+      <ConstructorContext.Provider value={constructorValue}>
         <main className={styles.main}>
-          <BurgerIngredients />
+          <BurgersDataContext.Provider value={burgersDataValue}>
+            <BurgerIngredients />
+          </BurgersDataContext.Provider>
           <BurgerConstructor />
         </main>
       </ConstructorContext.Provider>

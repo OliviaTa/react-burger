@@ -1,5 +1,5 @@
 import React from 'react';
-//import { ConstructorContext } from '../../utils/appContext';
+//import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
 import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
@@ -22,18 +22,19 @@ function BurgerIngredients() {
 
     const onTabClick = (tab) => {
         setActiveTab(tab);
+        const element = document.getElementById(tab);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
     // check total price ingredients
-    /*const { constructorState, constructorDispatcher } = React.useContext(ConstructorContext);
+    /*const { constructorDispatcher } = React.useContext(ConstructorContext);
+    const { burgersData } = React.useContext(BurgersDataContext);
     const testProducts = () => {
-        if (constructorState.burgersData.length) {
-            constructorDispatcher({ type: 'addItem', payload: constructorState.burgersData[0] });
-
-            setTimeout(() => {
-                constructorDispatcher({ type: 'addItem', payload: constructorState.burgersData[2] });
-                constructorDispatcher({ type: 'addItem', payload: constructorState.burgersData[1] });
-            }, 3000);
+        if (burgersData.length) {
+            constructorDispatcher({ type: 'addItem', payload: burgersData[0] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[8] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
         }
     }*/
 
