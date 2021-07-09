@@ -18,8 +18,6 @@ const reducer = (state, action) => {
       changedIngredients.push(action.payload);
       return { ...state, ingredients: changedIngredients };
     case 'removeItem':
-      if (action.payload.type === 'bun') return { ...state, bun: null };
-
       changedIngredients.splice(action.payload, 1);
       return { ...state, ingredients: changedIngredients };
     default:
@@ -35,7 +33,6 @@ function App() {
   }), [constructorState, constructorDispatcher]);
 
   const [burgersData, setBurgersData] = useState([]);
-  const burgersDataValue = useMemo(() => ({ burgersData }), [burgersData]);
 
   React.useEffect(() => {
     getIngredients()
@@ -52,7 +49,7 @@ function App() {
       <AppHeader />
       <ConstructorContext.Provider value={constructorValue}>
         <main className={styles.main}>
-          <BurgersDataContext.Provider value={burgersDataValue}>
+          <BurgersDataContext.Provider value={{ burgersData }}>
             <BurgerIngredients />
           </BurgersDataContext.Provider>
           <BurgerConstructor />

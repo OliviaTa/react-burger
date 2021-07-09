@@ -13,7 +13,7 @@ function Info() {
 
     const totalPrice = useMemo(() => {
         const ingredientsPrice = constructorState.ingredients.reduce((acc, item) => acc + item.price, 0);
-        const bunPrice = (constructorState.bun ? constructorState.bun.price : 0);
+        const bunPrice = (constructorState.bun ? constructorState.bun.price * 2 : 0);
         return ingredientsPrice + bunPrice;
     },
         [constructorState]

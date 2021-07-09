@@ -2,13 +2,14 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import React from 'react';
 import { ConstructorContext } from "../../../utils/appContext";
 import "./burger-components.css";
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerComponents() {
     const { constructorState, constructorDispatcher } = React.useContext(ConstructorContext);
 
     return (
         <div className='ingredients mb-10'>
-            {constructorState.bun && <div className='mb-4' key={`${constructorState.bun._id}-top`}>
+            {constructorState.bun && <div className='mb-4'>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -25,7 +26,7 @@ function BurgerComponents() {
                         };
 
                         return (
-                            <div className='burger_component mb-4' key={`${item._id}-${index}`}>
+                            <div className='burger_component mb-4' key={uuidv4()}>
                                 <div className='drag_icon'>
                                     <DragIcon type="primary" />
                                 </div>
@@ -39,7 +40,7 @@ function BurgerComponents() {
                         );
                     }).filter(x => x)}
             </div>
-            {constructorState.bun && <div className='bottom-bun pt-4' key={`${constructorState.bun._id}-bottom`}>
+            {constructorState.bun && <div className='bottom-bun pt-4'>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}

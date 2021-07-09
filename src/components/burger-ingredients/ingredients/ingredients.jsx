@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { BurgersDataContext, ConstructorContext } from '../../../utils/appContext';
 import { tabPropTypes } from '../../../utils/propTypesShapes';
 import IngredientDetails from '../../modal/ingredient-details/ingredient-details';
