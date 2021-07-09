@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { burgerConstructorPropTypes } from '../../utils/propTypesShapes';
+//import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
 import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
     const [activeTab, setActiveTab] = React.useState('bun');
 
     const tabs = [
@@ -23,7 +22,21 @@ function BurgerIngredients({ data }) {
 
     const onTabClick = (tab) => {
         setActiveTab(tab);
+        const element = document.getElementById(tab);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
+
+    // check total price ingredients
+    /*const { constructorDispatcher } = React.useContext(ConstructorContext);
+    const { burgersData } = React.useContext(BurgersDataContext);
+    const testProducts = () => {
+        if (burgersData.length) {
+            constructorDispatcher({ type: 'addItem', payload: burgersData[0] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[8] });
+            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
+        }
+    }*/
 
     return (
         <div className={`${styles.wrapper} pt-10 mr-10`}>
@@ -33,18 +46,10 @@ function BurgerIngredients({ data }) {
                 activeTab={activeTab}
                 onClick={onTabClick}
             />
-            <Ingredients
-                tabs={tabs}
-                data={data}
-            />
+            <Ingredients tabs={tabs} />
+            {/*<button onClick={testProducts}>Add</button>*/}
         </div>
     );
 }
-
-
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
-};
 
 export default BurgerIngredients;

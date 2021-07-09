@@ -1,43 +1,60 @@
-import React from 'react';
+import React, { useMemo, useReducer, useState } from 'react';
+import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
+import { getIngredients } from '../../utils/api';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
-const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const constructorInitialState = { bun: null, ingredients: [] };
+
+const reducer = (state, action) => {
+  let changedIngredients = [...state.ingredients];
+
+  switch (action.type) {
+    case 'addItem':
+      if (action.payload.type === 'bun') return { ...state, bun: action.payload };
+
+      changedIngredients.push(action.payload);
+      return { ...state, ingredients: changedIngredients };
+    case 'removeItem':
+      changedIngredients.splice(action.payload, 1);
+      return { ...state, ingredients: changedIngredients };
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+};
 
 function App() {
 
-  const [burgersData, setBurgersData] = React.useState([]);
+  const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState, undefined);
+  const constructorValue = useMemo(() => ({
+    constructorState, constructorDispatcher
+  }), [constructorState, constructorDispatcher]);
+
+  const [burgersData, setBurgersData] = useState([]);
 
   React.useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch(INGREDIENTS_URL);
-
-        if (res.ok) {
-          const data = await res.json();
-          setBurgersData(
-            data.data.map(item => ({ ...item, count: 1 }))
-          );
-        } else {
-          Promise.reject(`Ошибка ${res.status}`)
-        }
-      } catch (err) {
+    getIngredients()
+      .then(data => {
+        setBurgersData(data.data);
+      })
+      .catch(err => {
         console.log(err);
-      }
-    };
-
-    getData();
+      });
   }, []);
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
       <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients data={burgersData} />
-        <BurgerConstructor data={burgersData.filter(element => element.count > 0)} />
-      </main>
+      <ConstructorContext.Provider value={constructorValue}>
+        <main className={styles.main}>
+          <BurgersDataContext.Provider value={{ burgersData }}>
+            <BurgerIngredients />
+          </BurgersDataContext.Provider>
+          <BurgerConstructor />
+        </main>
+      </ConstructorContext.Provider>
     </div>
   );
 }

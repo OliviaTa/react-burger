@@ -3,9 +3,9 @@ import { burgerConstructorPropTypes } from '../../../../utils/propTypesShapes';
 import IngredientItem from './ingredient-item/ingredient-item';
 import styles from './ingredients-section.module.css';
 
-function IngredientsSection({ title, items, onIngredientClick }) {
+function IngredientsSection({ title, id, items, onIngredientClick }) {
     return (
-        <section>
+        <section id={id}>
             <h2 className='text_type_main-medium mb-6'>{title}</h2>
             <div className={`${styles.ingredients} pl-4 pr-4 pb-10`}>
                 {

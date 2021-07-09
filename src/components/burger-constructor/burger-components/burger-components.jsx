@@ -1,27 +1,32 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import { burgerConstructorPropTypes } from '../../../utils/propTypesShapes';
+import React from 'react';
+import { ConstructorContext } from "../../../utils/appContext";
 import "./burger-components.css";
+import { v4 as uuidv4 } from 'uuid';
 
-function BurgerComponents({ data }) {
-    const bun = data.find(item => item.type === 'bun');
+function BurgerComponents() {
+    const { constructorState, constructorDispatcher } = React.useContext(ConstructorContext);
 
     return (
         <div className='ingredients mb-10'>
-            {bun && <div className='mb-4' key={`${bun._id}-top`}>
+            {constructorState.bun && <div className='mb-4'>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    thumbnail={bun.image}
-                    price={bun.price}
+                    text={`${constructorState.bun.name} (верх)`}
+                    thumbnail={constructorState.bun.image}
+                    price={constructorState.bun.price}
                 />
             </div>}
             <div className='scrolled-elements'>
-                {data.map(item => {
-                    return (
-                        item.type !== 'bun' ?
-                            <div className='burger_component mb-4' key={item._id}>
+                {constructorState.ingredients
+                    .map((item, index) => {
+                        const deleteItem = () => {
+                            constructorDispatcher({ type: 'removeItem', payload: index });
+                        };
+
+                        return (
+                            <div className='burger_component mb-4' key={uuidv4()}>
                                 <div className='drag_icon'>
                                     <DragIcon type="primary" />
                                 </div>
@@ -29,27 +34,23 @@ function BurgerComponents({ data }) {
                                     text={item.name}
                                     thumbnail={item.image}
                                     price={item.price}
+                                    handleClose={deleteItem}
                                 />
-                            </div> :
-                            null
-                    );
-                }).filter(x => x)}
+                            </div>
+                        );
+                    }).filter(x => x)}
             </div>
-            {bun && <div className='bottom-bun pt-4' key={`${bun._id}-bottom`}>
+            {constructorState.bun && <div className='bottom-bun pt-4'>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    thumbnail={bun.image}
-                    price={bun.price}
+                    text={`${constructorState.bun.name} (низ)`}
+                    thumbnail={constructorState.bun.image}
+                    price={constructorState.bun.price}
                 />
             </div>}
         </div>
     );
 }
-
-BurgerComponents.propTypes = {
-    data: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired)
-};
 
 export default BurgerComponents;
