@@ -1,12 +1,10 @@
-import React, { useMemo, useReducer, useState } from 'react';
-import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
-import { getIngredients } from '../../utils/api';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
-
-const constructorInitialState = { bun: null, ingredients: [] };
 
 const reducer = (state, action) => {
   let changedIngredients = [...state.ingredients];
@@ -26,35 +24,19 @@ const reducer = (state, action) => {
 };
 
 function App() {
+  const dispatch = useDispatch();
 
-  const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState, undefined);
-  const constructorValue = useMemo(() => ({
-    constructorState, constructorDispatcher
-  }), [constructorState, constructorDispatcher]);
-
-  const [burgersData, setBurgersData] = useState([]);
-
-  React.useEffect(() => {
-    getIngredients()
-      .then(data => {
-        setBurgersData(data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
       <AppHeader />
-      <ConstructorContext.Provider value={constructorValue}>
-        <main className={styles.main}>
-          <BurgersDataContext.Provider value={{ burgersData }}>
-            <BurgerIngredients />
-          </BurgersDataContext.Provider>
-          <BurgerConstructor />
-        </main>
-      </ConstructorContext.Provider>
+      <main className={styles.main}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </main>
     </div>
   );
 }

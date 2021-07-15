@@ -1,42 +1,37 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useMemo } from 'react';
-import { ConstructorContext } from '../../../utils/appContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrder } from '../../../services/actions/burger-constructor';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
-import { getOrderData } from '../../../utils/api';
 import styles from './info.module.css';
 
 function Info() {
-    const { constructorState } = React.useContext(ConstructorContext);
+    const dispatch = useDispatch();
+
+    const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
+    const { order, orderRequestSuccess } = useSelector(state => state.burgerConstructor);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [orderNumber, setOrderNumber] = React.useState(0);
 
     const totalPrice = useMemo(() => {
-        const ingredientsPrice = constructorState.ingredients.reduce((acc, item) => acc + item.price, 0);
-        const bunPrice = (constructorState.bun ? constructorState.bun.price * 2 : 0);
+        const ingredientsPrice = ingredients.reduce((acc, item) => acc + item.price, 0);
+        const bunPrice = (bun ? bun.price * 2 : 0);
         return ingredientsPrice + bunPrice;
-    },
-        [constructorState]
-    );
+    }, [bun, ingredients]);
 
     const ingredientsIdList = useMemo(() => {
-        const list = constructorState.ingredients.map(item => item._id);
-        if (constructorState.bun) list.push(constructorState.bun._id);
+        const list = ingredients.map(item => item._id);
+        if (bun) list.push(bun._id);
         return list;
-    }, [constructorState]);
+    }, [bun, ingredients]);
+
+    const orderNumber = useMemo(() => order.orderNumber ? order.orderNumber : 0, [order]);
 
     const onButtonClick = () => {
         if (!ingredientsIdList.length) return;
 
-        getOrderData(ingredientsIdList)
-            .then(data => {
-                setOrderNumber(data.order.number);
-                setIsModalOpen(true);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        dispatch(getOrder());
+        setIsModalOpen(true);
     };
 
     return (
@@ -52,7 +47,7 @@ function Info() {
             >
                 Оформить заказ
             </Button>
-            {isModalOpen && <Modal onClose={() => setIsModalOpen(false)}>
+            {isModalOpen && orderRequestSuccess && <Modal onClose={() => setIsModalOpen(false)}>
                 <OrderDetails orderNumber={orderNumber} />
             </Modal>}
         </div>
