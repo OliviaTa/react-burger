@@ -8,7 +8,7 @@ import Modal from '../../modal/modal';
 import IngredientsSection from './ingredients-section/ingredients-section';
 import style from './ingredients.module.css';
 
-function Ingredients({ tabs }) {
+function Ingredients({ tabs, onScroll }) {
     const dispatch = useDispatch();
 
     const burgersData = useSelector(state => state.burgerConstructor.ingredients);
@@ -36,7 +36,7 @@ function Ingredients({ tabs }) {
 
     return (
         <>
-            <div className={style.ingredients}>
+            <div className={style.ingredients} onScroll={onScroll}>
                 {
                     tabs.map((item) => {
                         return (
@@ -62,7 +62,8 @@ function Ingredients({ tabs }) {
 }
 
 Ingredients.propTypes = {
-    tabs: PropTypes.arrayOf(tabPropTypes.isRequired)
+    tabs: PropTypes.arrayOf(tabPropTypes.isRequired),
+    onScroll: PropTypes.func
 };
 
 export default Ingredients;

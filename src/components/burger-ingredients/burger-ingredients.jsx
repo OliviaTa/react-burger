@@ -25,6 +25,19 @@ function BurgerIngredients() {
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
+    const onScroll = (e) => {
+        const targetTop = e.target.getBoundingClientRect().top;
+        let sections = Array.from(e.target.querySelectorAll('section'));
+        if (!sections.length) return;
+        sections = sections.map(section => ({
+            id: section.id,
+            top: Math.abs(section.getBoundingClientRect().top - targetTop)
+        }));
+
+        sections.sort((a, b) => a.top < b.top ? -1 : 1);
+        if (activeTab !== sections[0].id) setActiveTab(sections[0].id);
+    };
+
     return (
         <div className={`${styles.wrapper} pt-10 mr-10`}>
             <h1 className="text_type_main-large mb-5">Соберите бургер</h1>
@@ -33,7 +46,7 @@ function BurgerIngredients() {
                 activeTab={activeTab}
                 onClick={onTabClick}
             />
-            <Ingredients tabs={tabs} />
+            <Ingredients tabs={tabs} onScroll={onScroll} />
         </div>
     );
 }
