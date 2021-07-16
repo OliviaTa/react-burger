@@ -25,12 +25,12 @@ function Info() {
         return list;
     }, [bun, ingredients]);
 
-    const orderNumber = useMemo(() => order.orderNumber ? order.orderNumber : 0, [order]);
+    const orderNumber = useMemo(() => order.number ? order.number : 0, [order]);
 
     const onButtonClick = () => {
         if (!ingredientsIdList.length) return;
 
-        dispatch(getOrder());
+        dispatch(getOrder(ingredientsIdList));
         setIsModalOpen(true);
     };
 

@@ -1,13 +1,16 @@
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
-import { REMOVE_CONSTRUCTOR_INGREDIENT } from "../../../services/actions/burger-constructor";
+import { useDrop } from "react-dnd";
+import { useSelector } from "react-redux";
+import BurgerComponent from "./burger-component/burger-component";
 import "./burger-components.css";
+
 
 function BurgerComponents() {
     const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
-    const dispatch = useDispatch();
+    const [, drop] = useDrop({
+        accept: 'newPosition'
+    });
 
     return (
         <div className='ingredients mb-10'>
@@ -20,30 +23,8 @@ function BurgerComponents() {
                     price={bun.price}
                 />
             </div>}
-            <div className='scrolled-elements'>
-                {ingredients
-                    .map((item, index) => {
-                        const deleteItem = () => {
-                            dispatch({
-                                type: REMOVE_CONSTRUCTOR_INGREDIENT,
-                                index
-                            });
-                        };
-
-                        return (
-                            <div className='burger_component mb-4' key={uuidv4()}>
-                                <div className='drag_icon'>
-                                    <DragIcon type="primary" />
-                                </div>
-                                <ConstructorElement
-                                    text={item.name}
-                                    thumbnail={item.image}
-                                    price={item.price}
-                                    handleClose={deleteItem}
-                                />
-                            </div>
-                        );
-                    }).filter(x => x)}
+            <div ref={drop} className='scrolled-elements'>
+                {ingredients.map((item, index) => <BurgerComponent key={item.uid} item={item} index={index} />)}
             </div>
             {bun && <div className='bottom-bun pt-4'>
                 <ConstructorElement

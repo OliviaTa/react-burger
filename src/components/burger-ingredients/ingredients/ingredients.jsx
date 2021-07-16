@@ -17,7 +17,7 @@ function Ingredients({ tabs, onScroll }) {
 
     const burgersDataWithCount = useMemo(() => {
         let burgerIngredients = [...ingredients];
-        if (bun) ingredients.push(bun);
+        if (bun) burgerIngredients.push(bun);
         return burgersData.map(item => ({ ...item, count: burgerIngredients.filter(elem => elem._id === item._id).length }));
     }, [burgersData, bun, ingredients]);
 
