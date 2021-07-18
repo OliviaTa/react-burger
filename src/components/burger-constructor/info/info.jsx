@@ -1,7 +1,7 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrder } from '../../../services/actions/burger-constructor';
+import { getOrder } from '../../../services/actions/order';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
 import styles from './info.module.css';
@@ -10,7 +10,7 @@ function Info() {
     const dispatch = useDispatch();
 
     const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
-    const { order, orderRequestSuccess } = useSelector(state => state.burgerConstructor);
+    const { order, orderRequestSuccess } = useSelector(state => state.order);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
     const totalPrice = useMemo(() => {

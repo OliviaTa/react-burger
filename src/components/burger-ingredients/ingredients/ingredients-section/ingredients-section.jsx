@@ -26,6 +26,7 @@ function IngredientsSection({ title, id, items, onIngredientClick }) {
 
 IngredientsSection.propTypes = {
     title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(burgerConstructorPropTypes.isRequired),
     onIngredientClick: PropTypes.func.isRequired
 };

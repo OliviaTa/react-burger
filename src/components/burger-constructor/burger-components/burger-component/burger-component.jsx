@@ -1,7 +1,9 @@
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, REMOVE_CONSTRUCTOR_INGREDIENT } from "../../../../services/actions/burger-constructor";
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { burgerConstructorPropTypes } from "../../../../utils/propTypesShapes";
 
 const BurgerComponent = ({ item, index }) => {
     const dispatch = useDispatch();
@@ -61,5 +63,10 @@ const BurgerComponent = ({ item, index }) => {
         </div>
     );
 }
+
+BurgerComponent.propTypes = {
+    item: burgerConstructorPropTypes.isRequired,
+    index: PropTypes.number.isRequired
+};
 
 export default BurgerComponent;

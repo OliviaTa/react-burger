@@ -2,9 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
     ADD_CONSTRUCTOR_INGREDIENT,
     CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
+    CLEAR_CONSTRUCTOR,
     GET_INGREDIENTS,
-    GET_ORDER_REQUEST,
-    GET_ORDER_SUCCESS,
     REMOVE_CONSTRUCTOR_INGREDIENT,
     REMOVE_CURRENT_INGREDIENT,
     SET_CURRENT_INGREDIENT
@@ -16,9 +15,7 @@ const initialState = {
         bun: null,
         ingredients: []
     },
-    currentIngredient: {},
-    order: {},
-    orderRequestSuccess: false
+    currentIngredient: {}
 };
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -61,6 +58,14 @@ export const burgerConstructorReducer = (state = initialState, action) => {
                 }
             };
         }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                constructorIngredients: {
+                    ...initialState.constructorIngredients
+                }
+            }
+        }
         case CHANGE_CONSTRUCTOR_INGREDIENT_POSITION: {
             const ingredient = state.constructorIngredients.ingredients.filter(element => element.uid === action.item.uid)[0];
             const index = state.constructorIngredients.ingredients.indexOf(ingredient);
@@ -87,19 +92,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentIngredient: {}
-            }
-        }
-        case GET_ORDER_REQUEST: {
-            return {
-                ...state,
-                orderRequestSuccess: false
-            }
-        }
-        case GET_ORDER_SUCCESS: {
-            return {
-                ...state,
-                order: action.order,
-                orderRequestSuccess: true
             }
         }
         default:
