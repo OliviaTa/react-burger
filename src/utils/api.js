@@ -1,8 +1,9 @@
 const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 const ORDER_URL = 'https://norma.nomoreparties.space/api/orders';
 
-export const getIngredients = async () => {
+export const getIngredientsRequest = async () => {
     const res = await fetch(INGREDIENTS_URL);
+
     if (res.ok) {
         return await res.json();
     } else {

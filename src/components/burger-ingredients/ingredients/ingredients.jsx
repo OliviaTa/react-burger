@@ -1,34 +1,45 @@
 import PropTypes from 'prop-types';
-import { useContext, useMemo, useState } from 'react';
-import { BurgersDataContext, ConstructorContext } from '../../../utils/appContext';
+import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../../services/actions/burger-constructor';
 import { tabPropTypes } from '../../../utils/propTypesShapes';
 import IngredientDetails from '../../modal/ingredient-details/ingredient-details';
 import Modal from '../../modal/modal';
 import IngredientsSection from './ingredients-section/ingredients-section';
 import style from './ingredients.module.css';
 
-function Ingredients({ tabs }) {
-    const { burgersData } = useContext(BurgersDataContext);
-    const { constructorState } = useContext(ConstructorContext);
-    const burgersDataWithCount = useMemo(() => {
-        let ingredients = [...constructorState.ingredients];
-        if (constructorState.bun) ingredients.push(constructorState.bun);
+function Ingredients({ tabs, onScroll }) {
+    const dispatch = useDispatch();
 
-        return burgersData.map(item => ({ ...item, count: ingredients.filter(elem => elem._id === item._id).length }));
-    }, [burgersData, constructorState]);
+    const burgersData = useSelector(state => state.burgerConstructor.ingredients);
+    const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
+    const currentIngredient = useSelector(state => state.burgerConstructor.currentIngredient);
+
+    const burgersDataWithCount = useMemo(() => {
+        let burgerIngredients = [...ingredients];
+        if (bun) {
+            burgerIngredients.push(bun);
+            burgerIngredients.push(bun);
+        }
+        return burgersData.map(item => ({ ...item, count: burgerIngredients.filter(elem => elem._id === item._id).length }));
+    }, [burgersData, bun, ingredients]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentItem, setCurrentItem] = useState();
     const modalHeader = 'Детали ингредиента';
 
     const openModal = (item) => {
         setIsModalOpen(true);
-        setCurrentItem(item);
+        dispatch({ type: SET_CURRENT_INGREDIENT, item });
     };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        dispatch({ type: REMOVE_CURRENT_INGREDIENT });
+    }
 
     return (
         <>
-            <div className={style.ingredients}>
+            <div className={style.ingredients} onScroll={onScroll}>
                 {
                     tabs.map((item) => {
                         return (
@@ -45,16 +56,17 @@ function Ingredients({ tabs }) {
             </div >
             {isModalOpen && <Modal
                 header={modalHeader}
-                onClose={() => setIsModalOpen(false)}
+                onClose={closeModal}
             >
-                <IngredientDetails item={currentItem} />
+                <IngredientDetails item={currentIngredient} />
             </Modal>}
         </>
     );
 }
 
 Ingredients.propTypes = {
-    tabs: PropTypes.arrayOf(tabPropTypes.isRequired)
+    tabs: PropTypes.arrayOf(tabPropTypes.isRequired),
+    onScroll: PropTypes.func
 };
 
 export default Ingredients;

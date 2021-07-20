@@ -1,60 +1,29 @@
-import React, { useMemo, useReducer, useState } from 'react';
-import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
-import { getIngredients } from '../../utils/api';
+import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
-const constructorInitialState = { bun: null, ingredients: [] };
-
-const reducer = (state, action) => {
-  let changedIngredients = [...state.ingredients];
-
-  switch (action.type) {
-    case 'addItem':
-      if (action.payload.type === 'bun') return { ...state, bun: action.payload };
-
-      changedIngredients.push(action.payload);
-      return { ...state, ingredients: changedIngredients };
-    case 'removeItem':
-      changedIngredients.splice(action.payload, 1);
-      return { ...state, ingredients: changedIngredients };
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-};
-
 function App() {
+  const dispatch = useDispatch();
 
-  const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState, undefined);
-  const constructorValue = useMemo(() => ({
-    constructorState, constructorDispatcher
-  }), [constructorState, constructorDispatcher]);
-
-  const [burgersData, setBurgersData] = useState([]);
-
-  React.useEffect(() => {
-    getIngredients()
-      .then(data => {
-        setBurgersData(data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   return (
     <div className={`${styles.app} text text_type_main-default`}>
       <AppHeader />
-      <ConstructorContext.Provider value={constructorValue}>
-        <main className={styles.main}>
-          <BurgersDataContext.Provider value={{ burgersData }}>
-            <BurgerIngredients />
-          </BurgersDataContext.Provider>
+      <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
           <BurgerConstructor />
-        </main>
-      </ConstructorContext.Provider>
+        </DndProvider>
+      </main>
     </div>
   );
 }

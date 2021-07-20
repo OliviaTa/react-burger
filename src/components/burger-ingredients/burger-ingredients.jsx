@@ -1,5 +1,4 @@
 import React from 'react';
-//import { BurgersDataContext, ConstructorContext } from '../../utils/appContext';
 import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
@@ -26,17 +25,18 @@ function BurgerIngredients() {
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // check total price ingredients
-    /*const { constructorDispatcher } = React.useContext(ConstructorContext);
-    const { burgersData } = React.useContext(BurgersDataContext);
-    const testProducts = () => {
-        if (burgersData.length) {
-            constructorDispatcher({ type: 'addItem', payload: burgersData[0] });
-            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
-            constructorDispatcher({ type: 'addItem', payload: burgersData[8] });
-            constructorDispatcher({ type: 'addItem', payload: burgersData[2] });
-        }
-    }*/
+    const onScroll = (e) => {
+        const targetTop = e.target.getBoundingClientRect().top;
+        let sections = Array.from(e.target.querySelectorAll('section'));
+        if (!sections.length) return;
+        sections = sections.map(section => ({
+            id: section.id,
+            top: Math.abs(section.getBoundingClientRect().top - targetTop)
+        }));
+
+        sections.sort((a, b) => a.top < b.top ? -1 : 1);
+        if (activeTab !== sections[0].id) setActiveTab(sections[0].id);
+    };
 
     return (
         <div className={`${styles.wrapper} pt-10 mr-10`}>
@@ -46,8 +46,7 @@ function BurgerIngredients() {
                 activeTab={activeTab}
                 onClick={onTabClick}
             />
-            <Ingredients tabs={tabs} />
-            {/*<button onClick={testProducts}>Add</button>*/}
+            <Ingredients tabs={tabs} onScroll={onScroll} />
         </div>
     );
 }
