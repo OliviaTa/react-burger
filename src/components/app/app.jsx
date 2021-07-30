@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HomePage, LoginPage, RegistertPage } from '../../pages';
 import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
 function App() {
@@ -18,12 +16,19 @@ function App() {
   return (
     <div className={`${styles.app} text text_type_main-default`}>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegistertPage />
+          </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
