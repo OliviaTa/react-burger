@@ -10,5 +10,5 @@
 }
 
 .textColor {
-  color: #8585ad;
+  color: var(--color-secondary);
 }

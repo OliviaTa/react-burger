@@ -11,6 +11,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-secondary: #8585AD;
+  --color-standart: #F2F2F3;
 }
 
 code {
@@ -30,4 +33,8 @@ p {
 
 .input .input__icon {
   text-align: right;
+}
+
+a {
+  text-decoration: none;
 }

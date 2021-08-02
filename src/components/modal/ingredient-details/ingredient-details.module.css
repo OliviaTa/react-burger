@@ -7,5 +7,5 @@
 .nutritions {
   display: flex;
   gap: 20px;
-  color: #8585ad;
+  color: var(--color-secondary);
 }

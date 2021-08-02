@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    gap: 60px;
+    margin-left: 380px;
+}
+
+.nav {
+    width: 320px;
+}
+
+.nav a {
+    color: var(--color-secondary);
+}
+
+.link {
+    line-height: 64px;
+}
+
+.active a {
+    color: var(--color-standart);
+}
+
+.caption {
+    opacity: 0.4;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 480px;
+}
+
+.form div {
+    width: 100%;
+}
