@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { HomePage, LoginPage, RegistertPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, LoginPage, RegistertPage, ResetPasswordPage } from '../../pages';
 import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
 import styles from './app.module.css';
@@ -23,6 +23,12 @@ function App() {
           </Route>
           <Route path="/register">
             <RegistertPage />
+          </Route>
+          <Route path="/forgot-password">
+            <ForgotPasswordPage />
+          </Route>
+          <Route path="/reset-password">
+            <ResetPasswordPage />
           </Route>
           <Route path="/" exact={true}>
             <HomePage />

@@ -16,7 +16,7 @@ function Modal({ header = null, onClose, children }) {
         return () => {
             document.removeEventListener('keydown', closeOnEscKeyDown);
         };
-    }, []);
+    }, [onClose]);
 
     return ReactDOM.createPortal(
         <ModalOverlay onClick={onClose}>
