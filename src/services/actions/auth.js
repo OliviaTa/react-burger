@@ -1,4 +1,4 @@
-import { signInRequest, signOutRequest, signUpRequest } from "../../utils/api";
+import { getUserRequest, signInRequest, signOutRequest, signUpRequest } from "../../utils/api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 
 export const SET_USER = 'SET_USER';
@@ -10,7 +10,7 @@ export function signUp(form) {
             .then(res => {
                 if (res.accessToken && res.accessToken.indexOf('Bearer') === 0) {
                     localStorage.setItem('refreshToken', res.refreshToken);
-                    setCookie('accessToken', res.accessToken.split('Bearer ')[1], { expires: 20 * 60 });
+                    setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
                 }
                 dispatch({
                     type: SET_USER,
@@ -26,7 +26,7 @@ export function signIn(form) {
             .then(res => {
                 if (res.accessToken && res.accessToken.indexOf('Bearer') === 0) {
                     localStorage.setItem('refreshToken', res.refreshToken);
-                    setCookie('accessToken', res.accessToken.split('Bearer ')[1], { expires: 20 * 60 });
+                    setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
                 }
                 dispatch({
                     type: SET_USER,
@@ -46,5 +46,17 @@ export function signOut() {
                 });
                 deleteCookie('accessToken');
             })
+    }
+}
+
+export function getUser() {
+    return function (dispatch) {
+        getUserRequest()
+            .then(res => {
+                dispatch({
+                    type: SET_USER,
+                    user: res.user
+                });
+            });
     }
 }

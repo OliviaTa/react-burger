@@ -1,9 +1,9 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { OrdersPage } from '.';
-import { signOut } from '../services/actions/auth';
+import { getUser, signOut } from '../services/actions/auth';
 import styles from './profile.module.css';
 
 export function ProfilePage() {
@@ -17,23 +17,31 @@ export function ProfilePage() {
             placeholder: 'Имя',
             disabled: true
         },
-        login: {
+        email: {
             value: '',
             placeholder: 'Логин',
             disabled: true
         },
         password: {
-            value: '',
+            value: '******',
             placeholder: 'Пароль',
             disabled: true
         }
     });
 
-    for (const key in user) {
-        if (form[key]) {
-            form[key].value = user[key];
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
+
+    useEffect(() => {
+        const updatedForm = { ...form };
+        for (const key in user) {
+            if (updatedForm[key]) {
+                updatedForm[key].value = user[key];
+            }
         }
-    }
+        setForm(updatedForm);
+    }, [user]);
 
     const navLinks = [
         {
@@ -69,25 +77,6 @@ export function ProfilePage() {
         setForm({ ...form, [e.target.name]: { ...form[e.target.name], disabled: true } });
     };
 
-    const inputElements = [];
-
-    for (const key in form) {
-        inputElements.push(
-            <Input
-                type={key === 'password' ? "password" : "text"}
-                placeholder={form[key].placeholder}
-                value={form[key].value}
-                name={key}
-                disabled={form[key].disabled}
-                icon="EditIcon"
-                onChange={onChange}
-                onIconClick={() => onIconClick(key)}
-                onBlur={onBlur}
-                key={key}
-            />
-        );
-    }
-
     return (
         <div className={`${styles.wrapper} mt-30`}>
             <nav className={styles.nav}>
@@ -112,7 +101,20 @@ export function ProfilePage() {
             <Switch>
                 <Route path="/profile" exact={true}>
                     <form className={styles.form}>
-                        {inputElements}
+                        {Object.keys(form).map(key => (
+                            <Input
+                                type={key === 'password' ? "password" : "text"}
+                                placeholder={form[key].placeholder}
+                                value={form[key].value}
+                                name={key}
+                                disabled={form[key].disabled}
+                                icon="EditIcon"
+                                onChange={onChange}
+                                onIconClick={() => onIconClick(key)}
+                                onBlur={onBlur}
+                                key={key}
+                            />
+                        ))}
                     </form>
                 </Route>
                 <Route path="/profile/orders" exact={true}>
