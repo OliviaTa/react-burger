@@ -1,11 +1,16 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { OrdersPage } from '.';
+import { signOut } from '../services/actions/auth';
 import styles from './profile.module.css';
 
 export function ProfilePage() {
+    const dispatch = useDispatch();
+
     const [activeLink, setActiveLink] = useState('profile');
+    const user = useSelector(state => state.auth.user);
     const [form, setForm] = useState({
         name: {
             value: '',
@@ -24,6 +29,12 @@ export function ProfilePage() {
         }
     });
 
+    for (const key in user) {
+        if (form[key]) {
+            form[key].value = user[key];
+        }
+    }
+
     const navLinks = [
         {
             id: 'profile',
@@ -36,13 +47,12 @@ export function ProfilePage() {
             path: '/profile/orders',
             text: 'История заказов',
             caption: 'просмотреть свою историю заказов'
-        },
-        {
-            id: 'exit',
-            path: '/',
-            text: 'Выход'
         }
     ];
+
+    const onExitClick = () => {
+        dispatch(signOut());
+    };
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: { ...form[e.target.name], value: e.target.value } });
@@ -92,6 +102,7 @@ export function ProfilePage() {
                             </Link>
                         </li>
                     )}
+                    <li className={styles.link} onClick={onExitClick}>Выход</li>
                 </ul>
                 <div className={styles.caption}>
                     В этом разделе вы можете<br />

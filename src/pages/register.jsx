@@ -1,9 +1,13 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signUp } from '../services/actions/auth';
 import styles from './home.module.css';
 
 export function RegistertPage() {
+    const dispatch = useDispatch();
+
     const [form, setForm] = useState({ name: '', email: '', password: '' });
     const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -13,6 +17,11 @@ export function RegistertPage() {
 
     const onIconClick = () => {
         setPasswordVisible(!isPasswordVisible);
+    };
+
+    const onClick = (e) => {
+        e.preventDefault();
+        dispatch(signUp(form));
     };
 
     return (
@@ -45,7 +54,7 @@ export function RegistertPage() {
                     onChange={onChange}
                     onIconClick={onIconClick}
                 />
-                <Button type="primary" size="medium">Зарегистрироваться</Button>
+                <Button type="primary" size="medium" onClick={onClick}>Зарегистрироваться</Button>
             </form>
             <div className={styles.actions}>
                 <p>Уже зарегистрированы? <Link className={styles.link} to='/login'>Войти</Link></p>
