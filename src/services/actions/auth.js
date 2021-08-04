@@ -1,4 +1,4 @@
-import { getUserRequest, signInRequest, signOutRequest, signUpRequest } from "../../utils/api";
+import { getUserRequest, signInRequest, signOutRequest, signUpRequest, updateUserRequest } from "../../utils/api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 
 export const SET_USER = 'SET_USER';
@@ -52,6 +52,18 @@ export function signOut() {
 export function getUser() {
     return function (dispatch) {
         getUserRequest()
+            .then(res => {
+                dispatch({
+                    type: SET_USER,
+                    user: res.user
+                });
+            });
+    }
+}
+
+export function updateUser(updatedUser) {
+    return function (dispatch) {
+        updateUserRequest(updatedUser)
             .then(res => {
                 dispatch({
                     type: SET_USER,

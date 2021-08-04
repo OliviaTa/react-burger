@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { OrdersPage } from '.';
-import { getUser, signOut } from '../services/actions/auth';
+import { getUser, signOut, updateUser } from '../services/actions/auth';
 import styles from './profile.module.css';
 
 export function ProfilePage() {
@@ -75,6 +75,9 @@ export function ProfilePage() {
 
     const onBlur = e => {
         setForm({ ...form, [e.target.name]: { ...form[e.target.name], disabled: true } });
+        dispatch(updateUser({
+            [e.target.name]: e.target.value
+        }));
     };
 
     return (

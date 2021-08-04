@@ -129,3 +129,14 @@ export const getUserRequest = async () => {
         }
     });
 };
+
+export const updateUserRequest = async (updatedUser) => {
+    return await fetchWithRefresh(GET_USER_URL, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie('accessToken')
+        },
+        body: JSON.stringify(updatedUser)
+    });
+}
