@@ -1,4 +1,4 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
@@ -28,6 +28,7 @@ export function ProfilePage() {
             disabled: true
         }
     });
+    const [initialForm, setInitialForm] = useState({});
 
     const activeLink = useMemo(() => {
         const path = pathname.split('/');
@@ -43,9 +44,11 @@ export function ProfilePage() {
         for (const key in user) {
             if (updatedForm[key]) {
                 updatedForm[key].value = user[key];
+                updatedForm[key].disabled = true;
             }
         }
         setForm(updatedForm);
+        setInitialForm(updatedForm);
     }, [user]);
 
     const navLinks = [
@@ -72,17 +75,38 @@ export function ProfilePage() {
     };
 
     const onIconClick = (key) => {
-        setForm({ ...form, [key]: { ...form[key], disabled: false } });
-        setTimeout(() => {
-            document.querySelector(`[name=${key}]`).focus();
-        }, 0);
+        if (form[key].disabled) {
+            setForm({ ...form, [key]: { ...form[key], disabled: false } });
+            setTimeout(() => {
+                document.querySelector(`[name=${key}]`).focus();
+            }, 0);
+        } else {
+            setForm({ ...form, [key]: { ...form[key], value: initialForm[key].value, disabled: true } });
+            setTimeout(() => {
+                document.querySelector(`[name=${key}]`).blur();
+            }, 0);
+        }
     };
 
-    const onBlur = e => {
-        setForm({ ...form, [e.target.name]: { ...form[e.target.name], disabled: true } });
-        dispatch(updateUser({
-            [e.target.name]: e.target.value
-        }));
+    const onCancelClick = () => {
+        setForm(initialForm);
+    };
+
+    const onSaveClick = (e) => {
+        e.preventDefault();
+
+        const updatedForm = {};
+        for (const key in form) {
+            setForm({ ...form, [key]: { ...form[key], disabled: true } });
+
+            if (form[key].value !== initialForm[key].value) {
+                updatedForm[key] = form[key].value;
+            }
+        }
+
+        if (Object.keys(updatedForm).length) {
+            dispatch(updateUser(updatedForm));
+        }
     };
 
     return (
@@ -115,13 +139,18 @@ export function ProfilePage() {
                                 value={form[key].value}
                                 name={key}
                                 disabled={form[key].disabled}
-                                icon="EditIcon"
+                                icon={form[key].disabled ? "EditIcon" : "CloseIcon"}
                                 onChange={onChange}
                                 onIconClick={() => onIconClick(key)}
-                                onBlur={onBlur}
                                 key={key}
                             />
                         ))}
+                        {Object.keys(form).filter(key => !form[key].disabled).length ? (
+                            <div className={styles.actions}>
+                                <div className={`${styles.cancel} mr-7`} onClick={onCancelClick}>Отмена</div>
+                                <Button onClick={onSaveClick}>Сохранить</Button>
+                            </div>
+                        ) : null}
                     </form>
                 </Route>
                 <Route path="/profile/orders" exact={true}>
