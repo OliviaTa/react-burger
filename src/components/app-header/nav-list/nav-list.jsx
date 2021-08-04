@@ -1,33 +1,43 @@
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import NavElement from '../nav-element/nav-element';
 import styles from './nav-list.module.css';
 
 function NavList() {
-    const [activeLink, setActiveLink] = React.useState('constructor');
+    const history = useHistory();
+    const location = useLocation();
+
+    const [activeLink, setActiveLink] = useState('/');
+
+    useEffect(() => {
+        setActiveLink(location.pathname);
+    }, [location]);
 
     const menu = [
         {
             name: 'constructor',
             text: 'Конструктор',
-            icon: BurgerIcon
+            icon: BurgerIcon,
+            path: '/'
         },
         {
             name: 'ribbon',
             text: 'Лента заказов',
-            icon: ListIcon
+            icon: ListIcon,
+            path: ''
         }
     ];
 
-    const onLinkClick = (name) => {
-        setActiveLink(name);
+    const onLinkClick = (path) => {
+        history.replace(path);
     };
 
     return (
         <ul className={styles.navList}>
             {menu.map((item, index) => {
                 const Icon = item.icon;
-                const isActive = activeLink === item.name;
+                const isActive = activeLink === item.path;
 
                 return (
                     <li className={index === (menu.length - 1) ? '' : "mr-2"} key={item.name}>
@@ -36,6 +46,7 @@ function NavList() {
                             text={item.text}
                             isActive={isActive}
                             name={item.name}
+                            path={item.path}
                             onLinkClick={onLinkClick}
                         />
                     </li>
