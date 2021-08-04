@@ -57,10 +57,11 @@ export const getIngredientsRequest = async () => {
 };
 
 export const getOrderData = async (ingredientsIdList) => {
-    return await fetchRequest(ORDER_URL, {
+    return await fetchWithRefresh(ORDER_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie('accessToken')
         },
         body: JSON.stringify({
             ingredients: ingredientsIdList

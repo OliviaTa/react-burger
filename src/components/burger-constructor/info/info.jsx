@@ -1,6 +1,8 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { getUser } from '../../../services/actions/auth';
 import { getOrder } from '../../../services/actions/order';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
@@ -8,10 +10,12 @@ import styles from './info.module.css';
 
 function Info() {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
     const { order, orderRequestSuccess } = useSelector(state => state.order);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const user = useSelector(state => state.auth.user);
 
     const totalPrice = useMemo(() => {
         const ingredientsPrice = ingredients.reduce((acc, item) => acc + item.price, 0);
@@ -27,11 +31,24 @@ function Info() {
 
     const orderNumber = useMemo(() => order.number ? order.number : 0, [order]);
 
-    const onButtonClick = () => {
-        if (!ingredientsIdList.length) return;
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
 
-        dispatch(getOrder(ingredientsIdList));
-        setIsModalOpen(true);
+    const onButtonClick = () => {
+        if (!user) {
+            history.push({
+                pathname: '/login',
+                state: {
+                    from: '/'
+                }
+            });
+        } else {
+            if (!ingredientsIdList.length) return;
+
+            dispatch(getOrder(ingredientsIdList));
+            setIsModalOpen(true);
+        }
     };
 
     return (

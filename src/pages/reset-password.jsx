@@ -5,7 +5,8 @@ import { resetPassword } from '../utils/api';
 import styles from './home.module.css';
 
 export function ResetPasswordPage() {
-    const { state } = useHistory().location;
+    const history = useHistory();
+    const { state } = history.location;
 
     const [form, setForm] = useState({ password: '', token: '' });
     const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -24,6 +25,7 @@ export function ResetPasswordPage() {
             .then(res => {
                 console.log(res);
             });
+        history.replace('/login');
     }, [form]);
 
     if (state?.from !== '/forgot-password') {
