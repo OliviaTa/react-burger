@@ -1,15 +1,21 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { signIn } from '../services/actions/auth';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { getUser, signIn } from '../services/actions/auth';
 import styles from './home.module.css';
 
 export function LoginPage() {
     const dispatch = useDispatch();
+    const { state } = useHistory().location;
 
     const [form, setForm] = useState({ email: '', password: '' });
     const [isPasswordVisible, setPasswordVisible] = useState(false);
+    const { user, signInSuccess } = useSelector(state => state.auth);
+
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,6 +29,14 @@ export function LoginPage() {
         e.preventDefault();
         dispatch(signIn(form));
     };
+
+    if (user) {
+        return (
+            <Redirect
+                to={state?.from || '/'}
+            />
+        );
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -45,6 +59,8 @@ export function LoginPage() {
                     size='default'
                     onChange={onChange}
                     onIconClick={onIconClick}
+                    error={!signInSuccess}
+                    errorText={signInSuccess ? '' : 'Неверный пароль или e-mail'}
                 />
                 <Button type="primary" size="medium" onClick={onClick}>Войти</Button>
             </form>

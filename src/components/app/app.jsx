@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ForgotPasswordPage, HomePage, LoginPage, ProfilePage, RegistertPage, ResetPasswordPage } from '../../pages';
 import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
+import ProtectedRoute from '../protected-route';
 import styles from './app.module.css';
 
 function App() {
@@ -30,9 +31,9 @@ function App() {
           <Route path="/reset-password">
             <ResetPasswordPage />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
           <Route path="/" exact={true}>
             <HomePage />
           </Route>

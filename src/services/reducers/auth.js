@@ -1,7 +1,8 @@
-import { CLEAR_USER, SET_USER } from "../actions/auth";
+import { CLEAR_USER, SET_SIGNIN_SUCCESS, SET_USER } from "../actions/auth";
 
 const initialState = {
-    user: null
+    user: null,
+    signInSuccess: true
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -16,6 +17,12 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: null
+            };
+        }
+        case SET_SIGNIN_SUCCESS: {
+            return {
+                ...state,
+                signInSuccess: action.success
             };
         }
         default:

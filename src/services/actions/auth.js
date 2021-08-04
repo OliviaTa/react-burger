@@ -3,6 +3,7 @@ import { deleteCookie, setCookie } from "../../utils/cookie";
 
 export const SET_USER = 'SET_USER';
 export const CLEAR_USER = 'CLEAR_USER';
+export const SET_SIGNIN_SUCCESS = 'SET_SIGNIN_SUCCESS';
 
 export function signUp(form) {
     return function (dispatch) {
@@ -32,8 +33,19 @@ export function signIn(form) {
                     type: SET_USER,
                     user: res.user
                 });
-
+                dispatch({
+                    type: SET_SIGNIN_SUCCESS,
+                    success: true
+                });
             })
+            .catch(err => {
+                if (err.message === 'email or password are incorrect') {
+                    dispatch({
+                        type: SET_SIGNIN_SUCCESS,
+                        success: false
+                    });
+                }
+            });
     }
 }
 

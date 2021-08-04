@@ -1,10 +1,12 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { resetPassword } from '../utils/api';
 import styles from './home.module.css';
 
 export function ResetPasswordPage() {
+    const { state } = useHistory().location;
+
     const [form, setForm] = useState({ password: '', token: '' });
     const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -23,6 +25,14 @@ export function ResetPasswordPage() {
                 console.log(res);
             });
     }, [form]);
+
+    if (state?.from !== '/forgot-password') {
+        return (
+            <Redirect
+                to='/'
+            />
+        );
+    }
 
     return (
         <div className={styles.wrapper}>

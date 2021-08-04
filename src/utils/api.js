@@ -121,11 +121,16 @@ export const signOutRequest = async () => {
 };
 
 export const getUserRequest = async () => {
+    const accessToken = getCookie('accessToken');
+    if (!accessToken) {
+        return { user: null };
+    }
+
     return await fetchWithRefresh(GET_USER_URL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie('accessToken')
+            'Authorization': 'Bearer ' + accessToken
         }
     });
 };

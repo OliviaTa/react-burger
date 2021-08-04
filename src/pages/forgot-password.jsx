@@ -1,13 +1,21 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import { getUser } from '../services/actions/auth';
 import { recoveryPassword } from '../utils/api';
 import styles from './home.module.css';
 
 export function ForgotPasswordPage() {
-    const [form, setForm] = useState({ email: '' });
-
+    const dispatch = useDispatch();
     const history = useHistory();
+
+    const [form, setForm] = useState({ email: '' });
+    const user = useSelector(state => state.auth.user);
+
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,10 +26,23 @@ export function ForgotPasswordPage() {
         recoveryPassword(form)
             .then(res => {
                 if (res.success) {
-                    history.replace('/reset-password');
+                    history.replace({
+                        pathname: '/reset-password',
+                        state: {
+                            from: '/forgot-password'
+                        }
+                    });
                 }
             });
     }, [form, history]);
+
+    if (user) {
+        return (
+            <Redirect
+                to='/'
+            />
+        );
+    }
 
     return (
         <div className={styles.wrapper}>

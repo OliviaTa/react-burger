@@ -1,15 +1,15 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { OrdersPage } from '.';
 import { getUser, signOut, updateUser } from '../services/actions/auth';
 import styles from './profile.module.css';
 
 export function ProfilePage() {
     const dispatch = useDispatch();
+    const pathname = useLocation().pathname;
 
-    const [activeLink, setActiveLink] = useState('profile');
     const user = useSelector(state => state.auth.user);
     const [form, setForm] = useState({
         name: {
@@ -23,11 +23,16 @@ export function ProfilePage() {
             disabled: true
         },
         password: {
-            value: '******',
+            value: '',
             placeholder: 'Пароль',
             disabled: true
         }
     });
+
+    const activeLink = useMemo(() => {
+        const path = pathname.split('/');
+        return path[path.length - 1];
+    }, [pathname]);
 
     useEffect(() => {
         dispatch(getUser());
@@ -88,7 +93,6 @@ export function ProfilePage() {
                         <li className={`${activeLink === item.id ? styles.active : ''} ${styles.link}`} key={item.id}>
                             <Link
                                 to={item.path}
-                                onClick={() => setActiveLink(item.id)}
                             >
                                 {item.text}
                             </Link>

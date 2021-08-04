@@ -1,8 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { signUp } from '../services/actions/auth';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { getUser, signUp } from '../services/actions/auth';
 import styles from './home.module.css';
 
 export function RegistertPage() {
@@ -10,6 +10,11 @@ export function RegistertPage() {
 
     const [form, setForm] = useState({ name: '', email: '', password: '' });
     const [isPasswordVisible, setPasswordVisible] = useState(false);
+    const user = useSelector(state => state.auth.user);
+
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,6 +28,14 @@ export function RegistertPage() {
         e.preventDefault();
         dispatch(signUp(form));
     };
+
+    if (user) {
+        return (
+            <Redirect
+                to='/'
+            />
+        );
+    }
 
     return (
         <div className={styles.wrapper}>
