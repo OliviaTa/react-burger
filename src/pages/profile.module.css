@@ -4,28 +4,6 @@
     margin-left: 380px;
 }
 
-.nav {
-    width: 320px;
-}
-
-.nav a {
-    color: var(--color-secondary);
-}
-
-.link {
-    line-height: 64px;
-    color: var(--color-secondary);
-    cursor: pointer;
-}
-
-.active a {
-    color: var(--color-standart);
-}
-
-.caption {
-    opacity: 0.4;
-}
-
 .form {
     display: flex;
     flex-direction: column;

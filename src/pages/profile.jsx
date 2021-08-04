@@ -1,14 +1,14 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { OrdersPage } from '.';
-import { getUser, signOut, updateUser } from '../services/actions/auth';
+import ProfileNav from '../components/profile-nav/profile-nav';
+import { getUser, updateUser } from '../services/actions/auth';
 import styles from './profile.module.css';
 
 export function ProfilePage() {
     const dispatch = useDispatch();
-    const pathname = useLocation().pathname;
 
     const user = useSelector(state => state.auth.user);
     const [form, setForm] = useState({
@@ -30,11 +30,6 @@ export function ProfilePage() {
     });
     const [initialForm, setInitialForm] = useState({});
 
-    const activeLink = useMemo(() => {
-        const path = pathname.split('/');
-        return path[path.length - 1];
-    }, [pathname]);
-
     useEffect(() => {
         dispatch(getUser());
     }, [dispatch]);
@@ -50,25 +45,6 @@ export function ProfilePage() {
         setForm(updatedForm);
         setInitialForm(updatedForm);
     }, [user]);
-
-    const navLinks = [
-        {
-            id: 'profile',
-            path: '/profile',
-            text: 'Профиль',
-            caption: 'изменить свои персональные данные'
-        },
-        {
-            id: 'orders',
-            path: '/profile/orders',
-            text: 'История заказов',
-            caption: 'просмотреть свою историю заказов'
-        }
-    ];
-
-    const onExitClick = () => {
-        dispatch(signOut());
-    };
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: { ...form[e.target.name], value: e.target.value } });
@@ -111,24 +87,7 @@ export function ProfilePage() {
 
     return (
         <div className={`${styles.wrapper} mt-30`}>
-            <nav className={styles.nav}>
-                <ul className='text text_type_main-medium mb-20'>
-                    {navLinks.map(item =>
-                        <li className={`${activeLink === item.id ? styles.active : ''} ${styles.link}`} key={item.id}>
-                            <Link
-                                to={item.path}
-                            >
-                                {item.text}
-                            </Link>
-                        </li>
-                    )}
-                    <li className={styles.link} onClick={onExitClick}>Выход</li>
-                </ul>
-                <div className={styles.caption}>
-                    В этом разделе вы можете<br />
-                    {navLinks.filter(({ id }) => id === activeLink).map(({ caption }) => caption)}
-                </div>
-            </nav>
+            <ProfileNav />
             <Switch>
                 <Route path="/profile" exact={true}>
                     <form className={styles.form}>

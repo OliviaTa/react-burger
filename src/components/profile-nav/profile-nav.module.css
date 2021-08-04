@@ -1,0 +1,21 @@
+.nav {
+    width: 320px;
+}
+
+.nav a {
+    color: var(--color-secondary);
+}
+
+.active a {
+    color: var(--color-standart);
+}
+
+.link {
+    line-height: 64px;
+    color: var(--color-secondary);
+    cursor: pointer;
+}
+
+.caption {
+    opacity: 0.4;
+}
