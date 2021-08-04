@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ForgotPasswordPage, HomePage, LoginPage, ProfilePage, RegistertPage, ResetPasswordPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, IngredientDetailsPage, LoginPage, ProfilePage, RegistertPage, ResetPasswordPage } from '../../pages';
 import { getIngredients } from '../../services/actions/burger-constructor';
 import AppHeader from '../app-header/app-header';
 import ProtectedRoute from '../protected-route';
@@ -36,6 +36,9 @@ function App() {
           </ProtectedRoute>
           <Route path="/" exact={true}>
             <HomePage />
+          </Route>
+          <Route path={`/ingredients/:id`}>
+            <IngredientDetailsPage />
           </Route>
         </Switch>
       </div>

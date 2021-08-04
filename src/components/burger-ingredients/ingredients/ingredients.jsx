@@ -28,11 +28,13 @@ function Ingredients({ tabs, onScroll }) {
     const modalHeader = 'Детали ингредиента';
 
     const openModal = (item) => {
+        window.history.replaceState(null, '', `/ingredients/${item._id}`);
         setIsModalOpen(true);
         dispatch({ type: SET_CURRENT_INGREDIENT, item });
     };
 
     const closeModal = () => {
+        window.history.replaceState(null, '', '/');
         setIsModalOpen(false);
         dispatch({ type: REMOVE_CURRENT_INGREDIENT });
     }

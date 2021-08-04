@@ -13,7 +13,7 @@ export const burgerConstructorPropTypes = PropTypes.shape({
     image_mobile: PropTypes.string,
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number,
-    count: PropTypes.number.isRequired
+    count: PropTypes.number
 });
 
 export const tabPropTypes = PropTypes.shape({
