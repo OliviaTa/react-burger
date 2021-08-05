@@ -15,9 +15,12 @@ const checkResponse = (res) => {
 };
 
 const fetchRequest = async (url, options) => {
-    const res = await fetch(url, options);
-
-    return await checkResponse(res);
+    try {
+        const res = await fetch(url, options);
+        return await checkResponse(res);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 };
 
 const refreshToken = () => {
