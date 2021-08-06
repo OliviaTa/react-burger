@@ -1,9 +1,9 @@
 import styles from './nav-element.module.css';
 import PropTypes from 'prop-types';
 
-function NavElement({ icon, text, isActive = false, name = '', onLinkClick }) {
+function NavElement({ icon, text, isActive = false, name = '', path, onLinkClick }) {
     const elementClick = () => {
-        onLinkClick(name);
+        onLinkClick(path);
     };
 
     return (
@@ -23,6 +23,7 @@ NavElement.propTypes = {
     text: PropTypes.string.isRequired,
     isActive: PropTypes.bool,
     name: PropTypes.string,
+    path: PropTypes.string,
     onLinkClick: PropTypes.func.isRequired
 }
 

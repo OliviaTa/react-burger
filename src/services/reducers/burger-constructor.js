@@ -3,7 +3,9 @@ import {
     ADD_CONSTRUCTOR_INGREDIENT,
     CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
     CLEAR_CONSTRUCTOR,
-    GET_INGREDIENTS,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS,
+    GET_INGREDIENTS_FAILED,
     REMOVE_CONSTRUCTOR_INGREDIENT,
     REMOVE_CURRENT_INGREDIENT,
     SET_CURRENT_INGREDIENT
@@ -11,6 +13,8 @@ import {
 
 const initialState = {
     ingredients: [],
+    ingredientsRequest: false,
+    ingredientsFailed: false,
     constructorIngredients: {
         bun: null,
         ingredients: []
@@ -20,10 +24,25 @@ const initialState = {
 
 export const burgerConstructorReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_INGREDIENTS: {
+        case GET_INGREDIENTS_REQUEST: {
             return {
                 ...state,
-                ingredients: action.items
+                ingredientsRequest: true
+            };
+        }
+        case GET_INGREDIENTS_SUCCESS: {
+            return {
+                ...state,
+                ingredientsFailed: false,
+                ingredients: action.items,
+                ingredientsRequest: false
+            };
+        }
+        case GET_INGREDIENTS_FAILED: {
+            return {
+                ...state,
+                ingredientsFailed: true,
+                ingredientsRequest: false
             };
         }
         case ADD_CONSTRUCTOR_INGREDIENT: {

@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    gap: 60px;
+    margin-left: 380px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 480px;
+}
+
+.form div {
+    width: 100%;
+}
+
+.actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.actions .cancel {
+    width: auto;
+    margin-left: auto;
+    color: var(--color-accent);
+    cursor: pointer;
+}
