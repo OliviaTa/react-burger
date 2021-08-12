@@ -1,0 +1,17 @@
+.orders {
+    overflow-y: auto;
+    max-height: 80vh;
+    width: 608px;
+    margin-right: 56px;
+}
+
+::-webkit-scrollbar-track {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
