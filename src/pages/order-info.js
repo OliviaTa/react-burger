@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import OrderInfo from "../components/order-info/order-info";
 import { getOrdersIngredients } from "../utils";
+import styles from './order-info.module.css';
 
 export function OrderInfoPage() {
     const { id } = useParams();
@@ -15,6 +16,9 @@ export function OrderInfoPage() {
     }
 
     return (
-        <OrderInfo order={filteredOrders[0]} />
+        <div className={`${styles.container} pt-30`}>
+            <div className={`${styles.header} text text_type_digits-default`}>#{filteredOrders[0].number}</div>
+            <OrderInfo order={filteredOrders[0]} />
+        </div>
     );
 }

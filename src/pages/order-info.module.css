@@ -1,0 +1,10 @@
+.container {
+    width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header{
+    line-height: 64px;
+    text-align: center;
+}
