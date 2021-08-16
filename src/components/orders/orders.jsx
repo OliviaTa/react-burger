@@ -34,6 +34,8 @@ const Orders = () => {
             </section>
             {isModalOpen && <Modal
                 onClose={closeModal}
+                header={`#${currentOrder.number}`}
+                headerClassName='text text_type_digits-default'
             >
                 <OrderInfo order={currentOrder} />
             </Modal>}

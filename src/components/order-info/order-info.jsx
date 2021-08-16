@@ -27,7 +27,6 @@ const OrderInfo = ({ order }) => {
 
     return (
         <div className={`${styles.wrapper} text text_type_main-default`}>
-            <div className={`${styles.orderNumber} text text_type_digits-default mb-5`}>{`#${order.number}`}</div>
             <div className='mb-15'>
                 <h1 className="text text_type_main-medium mb-2">{order.name}</h1>
                 <div className={styles.status}>{formattedStatus}</div>
