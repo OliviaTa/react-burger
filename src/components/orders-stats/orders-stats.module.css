@@ -7,17 +7,20 @@
 }
 
 .done {
-    width: 272px;
+    min-width: 272px;
     margin-right: 40px;
+    flex-grow: 1;
 }
 
 .ready {
-    color: #00CCCC;
+    color: var(--color-success);
 }
 
 .ordersList {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 312px;
     gap: 8px;
 }
 

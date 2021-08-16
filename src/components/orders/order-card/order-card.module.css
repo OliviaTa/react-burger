@@ -41,6 +41,10 @@
     z-index: 1;
 }
 
+.image:last-child {
+    margin-left: 0;
+}
+
 .ingredientsCount {
     position: absolute;
     left: 0;

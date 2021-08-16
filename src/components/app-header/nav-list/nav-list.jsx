@@ -25,7 +25,7 @@ function NavList() {
             name: 'ribbon',
             text: 'Лента заказов',
             icon: ListIcon,
-            path: ''
+            path: '/feed'
         }
     ];
 

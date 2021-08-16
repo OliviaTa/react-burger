@@ -1,7 +1,11 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useMemo } from 'react';
+import { getFormattedDate, getTotalCost } from '../../../utils';
 import styles from './order-card.module.css';
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, onOrderClick }) => {
+    const formattedDate = useMemo(() => getFormattedDate(order.createdAt), [order]);
+
     let ingredients = [];
     let addIngredient = null;
 
@@ -15,12 +19,12 @@ const OrderCard = ({ order }) => {
     }
 
     return (
-        <div className={`${styles.card} p-6`}>
+        <div className={`${styles.card} p-6`} onClick={() => onOrderClick(order)}>
             <div className={`${styles.header} mb-6`}>
-                <div className="text text_type_digits-default">{`#${order.id}`}</div>
-                <div className={styles.timestamp}>{order.timestamp}</div>
+                <div className="text text_type_digits-default">{`#${order.number}`}</div>
+                <div className={styles.timestamp}>{formattedDate}</div>
             </div>
-            <div className='text text_type_main-medium mb-6'>{order.burgerName}</div>
+            <div className='text text_type_main-medium mb-6'>{order.name}</div>
             <div className={styles.content}>
                 <div className={styles.images}>
                     {addIngredient && (
@@ -29,12 +33,13 @@ const OrderCard = ({ order }) => {
                             <div className={styles.ingredientsCount}>{`+${addIngredient.count}`}</div>
                         </div>
                     )}
-                    {ingredients.reverse().map((ingredient, index) => (
-                        <img className={styles.image} key={index} src={ingredient.image} alt='ingredient' />
-                    ))}
+                    {ingredients.reverse().map((ingredient, index) => {
+                        return <img className={styles.image} key={index} src={ingredient.image} alt='ingredient' />
+                    }
+                    )}
                 </div>
                 <div className={styles.price}>
-                    <div className='text text_type_digits-default mr-2'>{order.price}</div>
+                    <div className='text text_type_digits-default mr-2'>{getTotalCost(order.ingredients)}</div>
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
