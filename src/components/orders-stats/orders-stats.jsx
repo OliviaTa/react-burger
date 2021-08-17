@@ -3,7 +3,6 @@ import styles from './orders-stats.module.css';
 
 const OrdersStats = () => {
     const { orders, total, totalToday } = useSelector(store => store.allOrders.ordersData);
-    console.log(orders);
 
     const readyOrders = orders
         ? orders

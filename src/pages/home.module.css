@@ -48,3 +48,8 @@
     flex-direction: column;
     align-items: center;
 }
+
+.orders {
+    width: 608px;
+    margin-right: 56px;
+}

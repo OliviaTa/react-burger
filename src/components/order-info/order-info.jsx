@@ -1,24 +1,10 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useMemo } from 'react';
 import { getFormattedDate, getTotalCost } from '../../utils';
+import OrderStatus from '../orders/order-card/order-status/order-status';
 import styles from './order-info.module.css';
 
 const OrderInfo = ({ order }) => {
-    console.log(order);
-
-    const formattedStatus = useMemo(() => {
-        switch (order.status) {
-            case 'done':
-                return 'Выполнен';
-            case 'pending':
-                return 'В процессе';
-            case 'created':
-                return 'Создан';
-            default:
-                return '';
-        }
-    }, [order]);
-
     const ingredientsWithCount = useMemo(() => {
         return order.ingredients
             .map(item => ({ ...item, count: order.ingredients.filter(element => item._id === element._id).length * (item.type === 'bun' ? 2 : 1) }))
@@ -29,7 +15,7 @@ const OrderInfo = ({ order }) => {
         <div className={`${styles.wrapper} text text_type_main-default`}>
             <div className='mb-15'>
                 <h1 className="text text_type_main-medium mb-2">{order.name}</h1>
-                <div className={styles.status}>{formattedStatus}</div>
+                <OrderStatus status={order.status} />
             </div>
             <div className='mb-10'>
                 <h2 className="text text_type_main-medium mb-6">Состав:</h2>
