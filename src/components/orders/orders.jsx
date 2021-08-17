@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { getOrdersIngredients } from "../../utils";
+import { orderPropTypes } from "../../utils/propTypesShapes";
 import Modal from "../modal/modal";
 import OrderInfo from "../order-info/order-info";
 import OrderCard from "./order-card/order-card";
@@ -41,6 +43,11 @@ const Orders = ({ orders, showStatus = false }) => {
             </Modal>}
         </>
     );
+};
+
+Orders.propTypes = {
+    orders: PropTypes.arrayOf(orderPropTypes),
+    showStatus: PropTypes.bool
 };
 
 export default Orders;

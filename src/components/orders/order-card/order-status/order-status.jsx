@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './order-status.module.css';
 
 const OrderStatus = ({ status }) => {
@@ -13,6 +14,10 @@ const OrderStatus = ({ status }) => {
         default:
             return null;
     }
+};
+
+OrderStatus.propTypes = {
+    status: PropTypes.string
 };
 
 export default OrderStatus;

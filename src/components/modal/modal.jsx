@@ -37,6 +37,7 @@ function Modal({ header = null, headerClassName = null, onClose, children }) {
 
 Modal.propTypes = {
     header: PropTypes.string,
+    headerClassName: PropTypes.string,
     onClose: PropTypes.func.isRequired,
     children: PropTypes.element
 };

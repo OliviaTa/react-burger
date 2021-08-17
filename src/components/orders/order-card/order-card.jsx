@@ -1,6 +1,8 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { getFormattedDate, getTotalCost } from '../../../utils';
+import { orderPropTypes } from '../../../utils/propTypesShapes';
 import styles from './order-card.module.css';
 import OrderStatus from './order-status/order-status';
 
@@ -47,6 +49,12 @@ const OrderCard = ({ order, onOrderClick, showStatus }) => {
             </div>
         </div>
     );
+};
+
+OrderCard.propTypes = {
+    order: orderPropTypes.isRequired,
+    onOrderClick: PropTypes.func.isRequired,
+    showStatus: PropTypes.bool
 };
 
 export default OrderCard;
