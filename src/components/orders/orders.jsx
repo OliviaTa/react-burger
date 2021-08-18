@@ -25,8 +25,8 @@ const Orders = ({ orders, showStatus = false }) => {
     };
     const closeModal = () => {
         window.history.replaceState(null, '', pathname);
-        setCurrentOrder(null);
         setModalOpen(false);
+        setCurrentOrder(null);
     }
 
     return (
