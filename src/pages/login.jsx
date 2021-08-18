@@ -40,7 +40,7 @@ export function LoginPage() {
 
     return (
         <div className={styles.wrapper}>
-            <form className={`${styles.form} mb-20`}>
+            <form onSubmit={onClick} className={`${styles.form} mb-20`}>
                 <h1 className={styles.heading}>Вход</h1>
                 <Input
                     type='email'
@@ -62,7 +62,7 @@ export function LoginPage() {
                     error={!signInSuccess}
                     errorText={signInSuccess ? '' : 'Неверный пароль или e-mail'}
                 />
-                <Button type="primary" size="medium" onClick={onClick}>Войти</Button>
+                <Button type="primary" size="medium">Войти</Button>
             </form>
             <div className={styles.actions}>
                 <p>Вы — новый пользователь? <Link className={styles.link} to='/register'>Зарегистрироваться</Link></p>

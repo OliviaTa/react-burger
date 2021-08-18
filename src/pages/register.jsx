@@ -39,7 +39,7 @@ export function RegistertPage() {
 
     return (
         <div className={styles.wrapper}>
-            <form className={`${styles.form} mb-20`}>
+            <form onSubmit={onClick} className={`${styles.form} mb-20`}>
                 <h1 className={styles.heading}>Регистрация</h1>
                 <Input
                     type='text'
@@ -67,7 +67,7 @@ export function RegistertPage() {
                     onChange={onChange}
                     onIconClick={onIconClick}
                 />
-                <Button type="primary" size="medium" onClick={onClick}>Зарегистрироваться</Button>
+                <Button type="primary" size="medium">Зарегистрироваться</Button>
             </form>
             <div className={styles.actions}>
                 <p>Уже зарегистрированы? <Link className={styles.link} to='/login'>Войти</Link></p>
