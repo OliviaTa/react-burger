@@ -32,7 +32,11 @@ const Orders = ({ orders, showStatus = false }) => {
     return (
         <>
             <div className={styles.orderList}>
-                {ordersList.map(order => <OrderCard key={order._id} order={order} onOrderClick={openModal} showStatus={showStatus} />)}
+                {ordersList.map(order => {
+                    return order
+                        ? <OrderCard key={order._id} order={order} onOrderClick={openModal} showStatus={showStatus} />
+                        : null;
+                })}
             </div>
             {isModalOpen && <Modal
                 onClose={closeModal}

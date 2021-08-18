@@ -38,7 +38,9 @@ const OrderCard = ({ order, onOrderClick, showStatus }) => {
                         </div>
                     )}
                     {ingredients.reverse().map((ingredient, index) => {
-                        return <img className={styles.image} key={index} src={ingredient.image} alt='ingredient' />
+                        return ingredient
+                            ? <img className={styles.image} key={index} src={ingredient.image} alt='ingredient' />
+                            : null;
                     }
                     )}
                 </div>
