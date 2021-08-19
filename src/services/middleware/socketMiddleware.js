@@ -7,7 +7,7 @@ export const socketMiddleware = (wsUrl, wsActions, provideToken = false) => {
         return next => action => {
             const { dispatch, getState } = store;
             const { type } = action;
-            const { wsInit, onOpen, onError, onMessage, onClose, wsClose } = wsActions;
+            const { wsInit, onOpen, onError, onMessage, onClose } = wsActions;
             const user = getState().auth.user;
 
             if (type === wsInit) {
@@ -17,10 +17,6 @@ export const socketMiddleware = (wsUrl, wsActions, provideToken = false) => {
                     params = `?token=${token}`;
                 }
                 socket = new WebSocket(`${wsUrl}${params}`);
-            }
-
-            if (type === wsClose && socket) {
-                socket.close();
             }
 
             if (socket) {

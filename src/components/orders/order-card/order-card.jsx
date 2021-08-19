@@ -1,12 +1,16 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import { getFormattedDate, getTotalCost } from '../../../utils';
 import { orderPropTypes } from '../../../utils/propTypesShapes';
 import styles from './order-card.module.css';
 import OrderStatus from './order-status/order-status';
 
-const OrderCard = ({ order, onOrderClick, showStatus }) => {
+const OrderCard = ({ order, showStatus }) => {
+    const location = useLocation();
+    const history = useHistory();
+
     const formattedDate = useMemo(() => getFormattedDate(order.createdAt), [order]);
 
     let ingredients = [];
@@ -21,8 +25,12 @@ const OrderCard = ({ order, onOrderClick, showStatus }) => {
         ingredients = [...order.ingredients];
     }
 
+    const onOrderClick = () => {
+        history.push(`${location.pathname}/${order._id}`, { background: location, orderNumber: order.number });
+    };
+
     return (
-        <div className={`${styles.card} p-6`} onClick={() => onOrderClick(order)}>
+        <div className={`${styles.card} p-6`} onClick={onOrderClick}>
             <div className={`${styles.header} mb-6`}>
                 <div className="text text_type_digits-default">{`#${order.number}`}</div>
                 <div className={styles.timestamp}>{formattedDate}</div>
@@ -55,7 +63,6 @@ const OrderCard = ({ order, onOrderClick, showStatus }) => {
 
 OrderCard.propTypes = {
     order: orderPropTypes.isRequired,
-    onOrderClick: PropTypes.func.isRequired,
     showStatus: PropTypes.bool
 };
 

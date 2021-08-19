@@ -1,16 +1,32 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo } from 'react';
-import { getFormattedDate, getTotalCost } from '../../utils';
-import { orderPropTypes } from '../../utils/propTypesShapes';
+import { useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router';
+import { getFormattedDate, getOrdersIngredients, getTotalCost } from '../../utils';
 import OrderStatus from '../orders/order-card/order-status/order-status';
 import styles from './order-info.module.css';
 
-const OrderInfo = ({ order }) => {
-    const ingredientsWithCount = useMemo(() => {
-        return order.ingredients
-            .map(item => ({ ...item, count: order.ingredients.filter(element => item._id === element._id).length * (item.type === 'bun' ? 2 : 1) }))
-            .filter((item, index) => order.ingredients.findIndex(element => element._id === item._id) === index);
-    }, [order]);
+const OrderInfo = () => {
+    const { id } = useParams();
+    const { pathname } = useLocation();
+
+    const allOrders = useSelector(state => state.allOrders.ordersData.orders || []);
+    const userOrders = useSelector(state => state.userOrders.userOrdersData.orders || []);
+    const orders = pathname.includes('/profile/orders')
+        ? userOrders
+        : allOrders;
+
+    const ingredients = useSelector(state => state.burgerConstructor.ingredients);
+    const filteredOrders = getOrdersIngredients(orders.filter(item => item._id === id), ingredients);
+
+    if (!filteredOrders.length) {
+        return null;
+    }
+
+    const order = filteredOrders[0];
+
+    const ingredientsWithCount = order.ingredients
+        .map(item => ({ ...item, count: order.ingredients.filter(element => item._id === element._id).length * (item.type === 'bun' ? 2 : 1) }))
+        .filter((item, index) => order.ingredients.findIndex(element => element._id === item._id) === index);
 
     return (
         <div className={`${styles.wrapper} text text_type_main-default`}>
@@ -42,10 +58,6 @@ const OrderInfo = ({ order }) => {
             </div>
         </div>
     );
-};
-
-OrderInfo.propTypes = {
-    order: orderPropTypes.isRequired
 };
 
 export default OrderInfo;

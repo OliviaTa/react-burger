@@ -1,16 +1,13 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route } from 'react-router-dom';
-import { getUser } from "../services/actions/auth";
 import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
+import { Redirect, Route } from 'react-router-dom';
+import { getCookie } from '../utils/cookie';
 
 const ProtectedRoute = ({ children, ...rest }) => {
-    const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
+    const cookie = getCookie('accessToken');
 
-    useEffect(() => {
-        dispatch(getUser());
-    }, [dispatch]);
+    if (!user && cookie) return null;
 
     return (
         <Route
