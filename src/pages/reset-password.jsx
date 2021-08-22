@@ -38,7 +38,7 @@ export function ResetPasswordPage() {
 
     return (
         <div className={styles.wrapper}>
-            <form className={`${styles.form} mb-20`}>
+            <form onSubmit={reset} className={`${styles.form} mb-20`}>
                 <h1 className={styles.heading}>Восстановление пароля</h1>
                 <Input
                     type={isPasswordVisible ? 'text' : 'password'}
@@ -58,7 +58,7 @@ export function ResetPasswordPage() {
                     size='default'
                     onChange={onChange}
                 />
-                <Button type="primary" size="medium" onClick={reset}>Сохранить</Button>
+                <Button type="primary" size="medium">Сохранить</Button>
             </form>
             <div className={styles.actions}>
                 <p>Вспомнили пароль? <Link className={styles.link} to='/login'>Войти</Link></p>

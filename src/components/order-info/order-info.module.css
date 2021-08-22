@@ -1,0 +1,56 @@
+.wrapper {
+    margin: 20px 40px -20px;
+}
+
+.status {
+    color: var(--color-success);
+}
+
+.ingredients {
+    max-height: 312px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 100px;
+    border: 2px solid transparent;
+    background: linear-gradient(#131316, #131316), linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+    background-clip: content-box, border-box;
+    z-index: 1;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.name {
+    flex-grow: 1;
+}
+
+.date {
+    color: var(--color-secondary);
+    flex-grow: 1;
+}
+
+.footer {
+    display: flex;
+}
+
+.totalPrice {
+    display: flex;
+    gap: 8px;
+}

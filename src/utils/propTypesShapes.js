@@ -20,3 +20,16 @@ export const tabPropTypes = PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
 });
+
+export const orderPropTypes = PropTypes.shape({
+    createdAt: PropTypes.string.isRequired,
+    ingredients: PropTypes.oneOfType([
+        PropTypes.arrayOf(burgerConstructorPropTypes).isRequired,
+        PropTypes.arrayOf(PropTypes.string).isRequired
+    ]),
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string,
+    _id: PropTypes.string.isRequired
+});

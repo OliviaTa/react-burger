@@ -1,0 +1,13 @@
+::-webkit-scrollbar-track {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 0 16px 0 8px;
+}

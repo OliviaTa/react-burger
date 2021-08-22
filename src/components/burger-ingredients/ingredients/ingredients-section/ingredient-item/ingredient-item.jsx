@@ -1,19 +1,26 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+import { useHistory, useLocation } from 'react-router';
 import { burgerConstructorPropTypes } from '../../../../../utils/propTypesShapes';
 import styles from './ingredient-item.module.css';
 
-function IngredientItem({ item, onClick }) {
+function IngredientItem({ item }) {
+    const history = useHistory();
+    const location = useLocation();
+
     const [, dragRef] = useDrag({
         type: 'ingredients',
         item: item
     });
 
+    const onClick = () => {
+        history.push(`/ingredients/${item._id}`, { background: location });
+    };
+
     return (
         <div
             className={styles.item}
-            onClick={() => onClick(item)}
+            onClick={onClick}
             ref={dragRef}
         >
             <img className={`${styles.image} ml-4 mr-4 mb-1`} src={item.image} alt={item.name} />
@@ -28,8 +35,7 @@ function IngredientItem({ item, onClick }) {
 }
 
 IngredientItem.propTypes = {
-    item: burgerConstructorPropTypes.isRequired,
-    onClick: PropTypes.func.isRequired
+    item: burgerConstructorPropTypes.isRequired
 }
 
 export default IngredientItem;

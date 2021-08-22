@@ -46,7 +46,7 @@ export function ForgotPasswordPage() {
 
     return (
         <div className={styles.wrapper}>
-            <form className={`${styles.form} mb-20`}>
+            <form onSubmit={recovery} className={`${styles.form} mb-20`}>
                 <h1 className={styles.heading}>Восстановление пароля</h1>
                 <Input
                     type='email'
@@ -56,7 +56,7 @@ export function ForgotPasswordPage() {
                     size='default'
                     onChange={onChange}
                 />
-                <Button type="primary" size="medium" onClick={recovery}>Восстановить</Button>
+                <Button type="primary" size="medium">Восстановить</Button>
             </form>
             <div className={styles.actions}>
                 <p>Вспомнили пароль? <Link className={styles.link} to='/login'>Войти</Link></p>

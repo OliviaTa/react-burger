@@ -2,7 +2,8 @@ import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS } from "../actions/order";
 
 const initialState = {
     order: {},
-    orderRequestSuccess: false
+    orderRequestSuccess: false,
+    orderRequest: false
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -10,14 +11,16 @@ export const orderReducer = (state = initialState, action) => {
         case GET_ORDER_REQUEST: {
             return {
                 ...state,
-                orderRequestSuccess: false
+                orderRequestSuccess: false,
+                orderRequest: true
             }
         }
         case GET_ORDER_SUCCESS: {
             return {
                 ...state,
                 order: action.order,
-                orderRequestSuccess: true
+                orderRequestSuccess: true,
+                orderRequest: false
             }
         }
         default:

@@ -7,13 +7,14 @@ import { getOrder } from '../../../services/actions/order';
 import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
 import styles from './info.module.css';
+import loading from '../../../images/loading.svg';
 
 function Info() {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
-    const { order, orderRequestSuccess } = useSelector(state => state.order);
+    const { order, orderRequestSuccess, orderRequest } = useSelector(state => state.order);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const user = useSelector(state => state.auth.user);
 
@@ -52,7 +53,10 @@ function Info() {
     };
 
     return (
-        <div className={styles.info} id='info'>
+        <div
+            className={`${styles.info} ${orderRequest ? styles.disabledButton : ''}`}
+            id='info'
+        >
             <div className={`${styles.price} mr-10`}>
                 <span className='text_type_digits-medium mr-2'>{totalPrice}</span>
                 <CurrencyIcon type="primary" />
@@ -62,7 +66,10 @@ function Info() {
                 size="large"
                 onClick={onButtonClick}
             >
-                Оформить заказ
+                {orderRequest
+                    ? <img className='ml-10 mr-10' src={loading} alt='loading' width="18" height="18" />
+                    : 'Оформить заказ'
+                }
             </Button>
             {isModalOpen && orderRequestSuccess && <Modal onClose={() => setIsModalOpen(false)}>
                 <OrderDetails orderNumber={orderNumber} />

@@ -1,0 +1,15 @@
+.container {
+    width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container > div {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.header{
+    line-height: 64px;
+    text-align: center;
+}
