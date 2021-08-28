@@ -1,9 +1,10 @@
+import { MiddlewareAPI } from "redux";
 import { getCookie } from "../../utils/cookie";
 import { TApplicationActions, TSocketActions, TSocketUserOrdersActions } from './../types/index';
 
 export const socketMiddleware = (wsUrl: string, wsActions: TSocketActions | TSocketUserOrdersActions, provideToken = false) => {
     // не могу понять, как здесь типизировать store
-    return (store: any) => {
+    return (store: MiddlewareAPI) => {
         let socket: WebSocket;
 
         return (next: (action: TApplicationActions) => void) => (action: TApplicationActions) => {

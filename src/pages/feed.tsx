@@ -1,9 +1,10 @@
-import { useSelector } from "../services/hooks";
+import { FC } from "react";
 import OrdersStats from "../components/orders-stats/orders-stats";
 import Orders from "../components/orders/orders";
+import { useSelector } from "../services/hooks";
 import styles from './home.module.css';
 
-export const FeedPage = () => {
+export const FeedPage: FC = () => {
     const orders = useSelector(state => state.allOrders.ordersData?.orders || []);
 
     return (

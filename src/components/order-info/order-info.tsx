@@ -1,12 +1,13 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from '../../services/hooks';
+import { FC } from 'react';
 import { useLocation, useParams } from 'react-router';
+import { useSelector } from '../../services/hooks';
+import { TBurgerConstructorItem } from '../../types/app.types';
 import { getFormattedDate, getOrdersIngredients, getTotalCost } from '../../utils';
 import OrderStatus from '../orders/order-card/order-status/order-status';
 import styles from './order-info.module.css';
-import { TBurgerConstructorItem } from '../../types/app.types';
 
-const OrderInfo = () => {
+const OrderInfo: FC = () => {
     const { id } = useParams<{ id: string }>();
     const { pathname } = useLocation();
 

@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { useSelector } from '../../services/hooks';
 import styles from './orders-stats.module.css';
 
-const OrdersStats = () => {
+const OrdersStats: FC = () => {
     const { orders, total, totalToday } = useSelector(store => store.allOrders?.ordersData || { orders: [], total: 0, totalToday: 0 });
 
     const readyOrders = orders

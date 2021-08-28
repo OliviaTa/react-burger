@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { TTabItem } from '../../types/app.types';
+import React, { FC, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import Ingredients from './ingredients/ingredients';
 import Tabs from './tabs/tabs';
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
     const [activeTab, setActiveTab] = useState<string>('bun');
 
     const tabs = [

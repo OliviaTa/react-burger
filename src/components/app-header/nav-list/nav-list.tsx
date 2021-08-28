@@ -1,10 +1,10 @@
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import NavElement from '../nav-element/nav-element';
 import styles from './nav-list.module.css';
 
-function NavList() {
+const NavList: FC = () => {
     const history = useHistory();
     const location = useLocation();
 

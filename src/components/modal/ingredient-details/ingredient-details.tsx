@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useSelector } from '../../../services/hooks';
+import { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { useSelector } from '../../../services/hooks';
 import IngredientDetailsValue from './ingredient-details-value.jsx/ingredient-details-value';
 import styles from './ingredient-details.module.css';
 
-function IngredientDetails() {
+const IngredientDetails: FC = () => {
     const { id } = useParams<{ id: string }>();
     const history = useHistory();
 

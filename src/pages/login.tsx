@@ -1,5 +1,5 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { getUser, signIn } from '../services/actions/auth';
 import { useDispatch, useSelector } from '../services/hooks';
@@ -10,7 +10,7 @@ export interface ILoginForm {
     password: string;
 };
 
-export function LoginPage() {
+export const LoginPage: FC = () => {
     const dispatch = useDispatch();
     const { state } = useHistory<{ from?: string }>().location;
 

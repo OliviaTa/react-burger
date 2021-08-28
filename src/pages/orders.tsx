@@ -1,8 +1,9 @@
-import { useSelector } from "../services/hooks";
+import { FC } from "react";
 import Orders from "../components/orders/orders";
+import { useSelector } from "../services/hooks";
 import styles from "./orders.module.css";
 
-export function OrdersPage() {
+export const OrdersPage: FC = () => {
     const orders = useSelector(state => state.userOrders.userOrdersData?.orders || []);
 
     return (

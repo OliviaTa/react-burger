@@ -1,12 +1,12 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from 'react';
+import React, { FC } from 'react';
 import { useDrop } from "react-dnd";
 import { useSelector } from "../../../services/hooks";
 import BurgerComponent from "./burger-component/burger-component";
 import "./burger-components.css";
 
 
-function BurgerComponents() {
+const BurgerComponents: FC = () => {
     const { bun, ingredients } = useSelector(state => state.burgerConstructor.constructorIngredients);
     const [, drop] = useDrop({
         accept: 'newPosition'

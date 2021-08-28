@@ -1,5 +1,5 @@
 import { Location } from 'history';
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { FeedPage, ForgotPasswordPage, HomePage, IngredientDetailsPage, LoginPage, OrderInfoPage, ProfilePage, RegistertPage, ResetPasswordPage } from '../../pages';
 import { WS_CONNECTION_START } from '../../services/actions/allOrders';
@@ -19,7 +19,7 @@ interface ILocationState {
   orderNumber: string;
 }
 
-function App() {
+const App: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<ILocationState>();

@@ -1,5 +1,5 @@
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 import loading from '../../../images/loading.svg';
 import { getUser } from '../../../services/actions/auth';
@@ -9,7 +9,7 @@ import Modal from '../../modal/modal';
 import OrderDetails from '../../modal/order-details/order-details';
 import styles from './info.module.css';
 
-function Info() {
+const Info: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 

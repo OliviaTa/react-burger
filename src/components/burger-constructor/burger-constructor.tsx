@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from '../../services/hooks';
 import { ADD_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
+import { useDispatch } from '../../services/hooks';
 import BurgerComponents from './burger-components/burger-components';
 import styles from './burger-constructor.module.css';
 import Info from './info/info';
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
 
     const [, dropTarget] = useDrop({

@@ -13,7 +13,9 @@ export const getFormattedDate = (createdAt: string) => {
 };
 
 export const getTotalCost = (ingredients: TBurgerConstructorItem[]) => {
-    return ingredients.reduce((acc, item) => item.type === 'bun' ? (acc + item.price * 2) : (acc + item.price), 0);
+    return ingredients
+        .filter(item => item)
+        .reduce((acc, item) => item.type === 'bun' ? (acc + item.price * 2) : (acc + item.price), 0);
 };
 
 export const getOrdersIngredients = (orders: TOrderItem[], ingredients: TBurgerConstructorItem[]) => {

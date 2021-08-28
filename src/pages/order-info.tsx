@@ -1,10 +1,11 @@
-import { useSelector } from "../services/hooks";
+import { FC } from "react";
 import { useLocation, useParams } from "react-router";
 import OrderInfo from "../components/order-info/order-info";
+import { useSelector } from "../services/hooks";
 import { getOrdersIngredients } from "../utils";
 import styles from './order-info.module.css';
 
-export function OrderInfoPage() {
+export const OrderInfoPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const { pathname } = useLocation();
 

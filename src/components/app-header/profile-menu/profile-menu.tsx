@@ -1,8 +1,9 @@
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FC } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import NavElement from '../nav-element/nav-element';
 
-function ProfileMenu() {
+const ProfileMenu: FC = () => {
     const history = useHistory();
     const location = useLocation();
 

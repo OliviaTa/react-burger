@@ -1,8 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '../services/hooks';
+import React, { FC, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { getUser, signUp } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/hooks';
 import styles from './home.module.css';
 
 export interface IRegisterForm {
@@ -11,7 +11,7 @@ export interface IRegisterForm {
     password: string;
 };
 
-export function RegistertPage() {
+export const RegistertPage: FC = () => {
     const dispatch = useDispatch();
 
     const [form, setForm] = useState<IRegisterForm>({ name: '', email: '', password: '' });

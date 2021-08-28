@@ -1,12 +1,12 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '../services/hooks';
+import React, { FC, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { OrdersPage } from '.';
 import ProfileNav from '../components/profile-nav/profile-nav';
 import { getUser, updateUser } from '../services/actions/auth';
-import styles from './profile.module.css';
+import { useDispatch, useSelector } from '../services/hooks';
 import { TUser } from '../types/state.types';
+import styles from './profile.module.css';
 
 export interface IProfileFormField {
     value: string;
@@ -20,7 +20,7 @@ export type TProfileForm<T = IProfileFormField> = {
     [ff in FormFields]: T;
 };
 
-export function ProfilePage() {
+export const ProfilePage: FC = () => {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.auth.user);

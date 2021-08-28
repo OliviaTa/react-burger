@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
-import { useDispatch } from '../../services/hooks';
+import { FC, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { signOut } from '../../services/actions/auth';
+import { useDispatch } from '../../services/hooks';
 import styles from './profile-nav.module.css';
 
-const ProfileNav = () => {
+const ProfileNav: FC = () => {
     const pathname = useLocation().pathname;
     const dispatch = useDispatch();
 

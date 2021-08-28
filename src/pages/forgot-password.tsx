@@ -1,8 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '../services/hooks';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { getUser } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/hooks';
 import { recoveryPassword } from '../utils/api';
 import styles from './home.module.css';
 
@@ -10,7 +10,7 @@ export interface IForgotPasswordForm {
     email: string;
 };
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 

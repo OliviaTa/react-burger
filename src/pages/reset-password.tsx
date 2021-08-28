@@ -1,5 +1,5 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { resetPassword } from '../utils/api';
 import styles from './home.module.css';
@@ -9,7 +9,7 @@ export interface IResetPasswordForm {
     token: string;
 }
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage: FC = () => {
     const history = useHistory<{ from?: string }>();
     const { state } = history.location;
 

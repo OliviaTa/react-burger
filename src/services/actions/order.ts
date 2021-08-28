@@ -1,3 +1,4 @@
+import { TOrderItem } from './../../types/app.types';
 import { getOrderData } from "../../utils/api";
 import { AppDispatch, AppThunk } from '../types';
 import { TOrderInfo } from './../../types/state.types';
@@ -17,13 +18,18 @@ export interface IGetOrderSuccessAction {
 
 export type TOrderActions = IGetOrderRequestAction | IGetOrderSuccessAction;
 
-export const getOrder: AppThunk = (ingredientsId) => (dispatch: AppDispatch) => {
+export const getOrder: AppThunk = (ingredientsId: string[]) => (dispatch: AppDispatch) => {
     dispatch({ type: GET_ORDER_REQUEST });
     getOrderData(ingredientsId)
         .then(res => {
+            const order: TOrderInfo = res.order;
+            if (order?.ingredients) {
+                order.ingredients = order.ingredients.filter(item => item);
+            }
+
             dispatch({
                 type: GET_ORDER_SUCCESS,
-                order: res.order
+                order
             });
             dispatch({ type: CLEAR_CONSTRUCTOR });
         })
